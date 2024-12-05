@@ -16,6 +16,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.2",
     "react-spinners": "^0.14.1",
+    "recharts": "^2.14.1",
     "sass": "^1.82.0",
     "uuid": "^11.0.3"
   },
