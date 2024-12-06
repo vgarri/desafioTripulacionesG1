@@ -2,6 +2,7 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 const bcrypt = require('bcrypt'); 
 const sequelize = require('../config/db_pqSQL');
 
+
 class Admin extends Model {
   static async getAdmin() {
     return await Admin.findAll();
