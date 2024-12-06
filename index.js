@@ -7,8 +7,8 @@ const port = 3000;
 
 
 const morgan = require("./middlewares/morgan")
-/* app.use(morgan(':method :url :status - :response-time ms :body'));
-app.use(express.urlencoded({ extended: true })); */
+app.use(morgan(':method :url :status - :response-time ms :body'));
+app.use(express.urlencoded({ extended: true }));
 
 // app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -21,20 +21,20 @@ app.use(express.json());
 // }));
 
 
-// const userRoutes = require("./routes/user.routes")
+const adminRoutes = require("./routes/admin.routes")
 // const favoriteRoutes = require("./routes/favorite.routes")
 // const markerRoutes = require("./routes/marker.routes")
 
-// app.use('/api/user', userRoutes);
+app.use('/api/admin', adminRoutes);
 // app.use('/api/marker', markerRoutes);
 // app.use('/api/favorites', favoriteRoutes);
 
 
 
 
-// app.use('*', function(req, res){
-//     res.status(404).render('error', { statusCode: 400 })
-// });
+app.use('*', function(req, res){
+    res.status(404).render('error', { statusCode: 400 })
+});
 
 app.listen(port, () => {
     console.log(`Listening on http://localhost:${port}`)
