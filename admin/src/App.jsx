@@ -12,7 +12,7 @@ function App() {
   const handleLogin = () => setIsAuthenticated(true);
   const handleLogout = () => {
     setIsAuthenticated(false);
-    window.location.href = '/login'; // Redirige al login al cerrar sesión
+    window.location.href = '/'; // Redirige al login al cerrar sesión
   };
 
   return (
@@ -21,18 +21,18 @@ function App() {
       <Routes>
         {/* Login */}
         <Route
-          path="/login"
+          path="/"
           element={!isAuthenticated ? <Login onLogin={handleLogin} /> : <Navigate to="/graficas" />}
         />
         {/* Graficas */}
         <Route
           path="/graficas"
-          element={isAuthenticated ? <Graficas /> : <Navigate to="/login" />}
+          element={isAuthenticated ? <Graficas /> : <Navigate to="/" />}
         />
         {/* Edición */}
         <Route
           path="/edicion"
-          element={isAuthenticated ? <Edicion /> : <Navigate to="/login" />}
+          element={isAuthenticated ? <Edicion /> : <Navigate to="/" />}
         />
       </Routes>
       <Footer />
