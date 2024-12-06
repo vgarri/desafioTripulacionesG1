@@ -1,14 +1,43 @@
-import React from 'react'
-import './App.css'
-import Main from './components/Main/Main'
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import Login from './components/Main/Login/Login';
+import Graficas from './components/Main/Graficas/Graficas';
+import Edicion from './components/Main/Edicion/Edicion';
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const handleLogin = () => setIsAuthenticated(true);
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    window.location.href = '/login'; // Redirige al login al cerrar sesión
+  };
 
   return (
-    <>
-      <Main />
-    </>
-  )
+    <Router>
+      <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+      <Routes>
+        {/* Login */}
+        <Route
+          path="/login"
+          element={!isAuthenticated ? <Login onLogin={handleLogin} /> : <Navigate to="/graficas" />}
+        />
+        {/* Graficas */}
+        <Route
+          path="/graficas"
+          element={isAuthenticated ? <Graficas /> : <Navigate to="/login" />}
+        />
+        {/* Edición */}
+        <Route
+          path="/edicion"
+          element={isAuthenticated ? <Edicion /> : <Navigate to="/login" />}
+        />
+      </Routes>
+      <Footer />
+    </Router>
+  );
 }
 
-export default App
+export default App;
