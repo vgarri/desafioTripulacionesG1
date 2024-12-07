@@ -5,6 +5,8 @@ import Footer from './components/Footer/Footer';
 import Login from './components/Main/Login/Login';
 import Graficas from './components/Main/Graficas/Graficas';
 import Edicion from './components/Main/Edicion/Edicion';
+import './styles/styles.scss';
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

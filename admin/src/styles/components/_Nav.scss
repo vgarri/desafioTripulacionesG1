@@ -1,0 +1,66 @@
+@import '../utils/variables';
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Links centrados y botón a la derecha */
+  width: 100%;
+  flex-wrap: wrap;
+
+  @media (max-width: $mobile-breakpoint) {
+    flex-direction: column; /* Apila los elementos en móvil */
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @media (max-width: $mobile-breakpoint) {
+    flex-direction: column; /* Links en columna */
+    align-items: center;
+    width: 100%; /* Ocupan todo el ancho */
+  }
+
+  li {
+    .btn-link {
+      color: $light;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: map-get($complementary-colors, "aqua");
+      }
+    }
+  }
+}
+
+.nav-logout {
+  @media (max-width: $mobile-breakpoint) {
+    margin-top: 1rem; /* Espacio extra en móvil */
+  }
+
+  .btn-link {
+    color: $light;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: map-get($complementary-colors, "aqua");
+    }
+  }
+}

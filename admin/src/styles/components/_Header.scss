@@ -1,0 +1,26 @@
+@import '../utils/variables';
+
+.header {
+  width: 100%; /* Asegura que ocupe todo el ancho */
+  background-color: $primary-color;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 0; /* Elimina cualquier padding del contenedor principal */
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Links a los extremos */
+    flex-wrap: wrap; /* Permite que los elementos se ajusten en móvil */
+    padding: 1rem 2rem; /* Ajusta espacio interior */
+    width: 100%; /* Asegura que ocupe todo el ancho */
+  }
+
+  .header-logo {
+    height: 50px;
+    width: auto;
+
+    @media (max-width: $mobile-breakpoint) {
+      margin: 0 auto; /* Centra el logo en móviles */
+    }
+  }
+}

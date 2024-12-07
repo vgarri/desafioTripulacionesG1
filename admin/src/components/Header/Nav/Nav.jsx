@@ -3,18 +3,21 @@ import { Link } from 'react-router-dom';
 
 const Nav = ({ onLogout }) => {
   return (
-    <nav className="nav_generic">
-      <ul className="nav">
-        <li className="nav-link">
+    <nav className="nav">
+      {/* Links centrados */}
+      <ul className="nav-links">
+        <li>
           <Link className="btn-link" to="/graficas">Gráficas</Link>
         </li>
-        <li className="nav-link">
+        <li>
           <Link className="btn-link" to="/edicion">Edición</Link>
         </li>
-        <li className="nav-link">
-          <button className="btn-link" onClick={onLogout}>Cerrar sesión</button>
-        </li>
       </ul>
+
+      {/* Botón de cerrar sesión a la derecha */}
+      <div className="nav-logout">
+        <button className="btn-link" onClick={onLogout}>Cerrar sesión</button>
+      </div>
     </nav>
   );
 };

@@ -3,11 +3,16 @@ import Nav from './Nav/Nav';
 
 const Header = ({ isAuthenticated, onLogout }) => {
   return (
-    <section id="header">
-            <img src="https://felgtbi.org/wp-content/uploads/2021/10/cropped-logo_felgtbi.png" alt="Logo" />
-      {/* Solo muestra el Nav si el usuario está autenticado */}
-      {isAuthenticated && <Nav onLogout={onLogout} />}
-    </section>
+    <header className="header">
+      <div className="header-content">
+        <img 
+          className="header-logo" 
+          src="https://felgtbi.org/wp-content/uploads/2021/10/logo_felgtbi_blanco.png" 
+          alt="Logo" 
+        />
+        {isAuthenticated && <Nav onLogout={onLogout} />}
+      </div>
+    </header>
   );
 };
 
