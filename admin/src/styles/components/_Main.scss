@@ -1,0 +1,15 @@
+@import '../utils/variables';
+
+.main-container {
+  min-height: calc(100vh - 100px); 
+  padding: 2rem;
+  background-color: $secondary-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: $mobile-breakpoint) {
+    padding: 1rem; 
+  }
+}
