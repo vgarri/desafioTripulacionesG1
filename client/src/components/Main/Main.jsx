@@ -1,7 +1,10 @@
 import React from "react";
+import Chatbot from "./chatbot/Chatbot";
 
 const Main = () => {
-  return <div>Main</div>;
+  return <div>
+    < Chatbot/>
+  </div>;
 };
 
 export default Main;
