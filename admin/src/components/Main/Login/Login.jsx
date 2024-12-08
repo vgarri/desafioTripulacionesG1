@@ -6,7 +6,7 @@ const Login = ({ onLogin }) => {
 
 
   //este useEffect testea la conexión con el Backend y la BBDD:
-  useEffect(() => {
+  /* useEffect(() => {
     const testConnection = async () => {
       try {
         const request = await axios({
@@ -24,7 +24,7 @@ const Login = ({ onLogin }) => {
       }
     }
     testConnection();
-  }, [])
+  }, []) */
 
 
 
