@@ -2,31 +2,56 @@
 
 .nav {
   display: flex;
+  align-items: center;
   gap: 2rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  flex-wrap: wrap; 
+  justify-content: space-between;
+  width: 100%;
 
-  .nav-link {
-    .btn-link {
-      color: $light;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
-      padding: 0.5rem 1rem;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      transition: all 0.3s ease;
+  @media (max-width: $mobile-breakpoint) {
+    flex-direction: column; 
+    align-items: center;
+    gap: 1rem; 
+  }
 
-      &:hover {
-        color: map-get($complementary-colors, "aqua");
-        transform: scale(1.1);
-      }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none; 
+    margin: 0;
+    padding: 0;
 
-      &:focus {
-        outline: 2px solid map-get($complementary-colors, "yellow");
-      }
+    @media (max-width: $mobile-breakpoint) {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+
+  .btn-link {
+    color: $light;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: map-get($complementary-colors, "aqua");
+      transform: scale(1.1);
+    }
+
+    &:focus {
+      outline: 2px solid map-get($complementary-colors, "yellow");
+    }
+  }
+
+  .nav-logout {
+    @media (max-width: $mobile-breakpoint) {
+      margin-top: 1rem; 
     }
   }
 }

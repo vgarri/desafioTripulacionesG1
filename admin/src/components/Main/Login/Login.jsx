@@ -12,7 +12,7 @@ const Login = ({ onLogin }) => {
   return (
     <main className="login-container">
       <div className="login">
-        <h1 className="login-title">Iniciar Sesión</h1>
+        <h1 className="login-title">Panel de Administrador</h1>
         <form className="login-form" onSubmit={handleSubmit}>
           <input
             type="email"
