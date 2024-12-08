@@ -5,6 +5,7 @@ import Footer from './components/Footer/Footer';
 import Login from './components/Main/Login/Login';
 import Graficas from './components/Main/Graficas/Graficas';
 import Edicion from './components/Main/Edicion/Edicion';
+import './styles/styles.scss';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -17,25 +18,29 @@ function App() {
 
   return (
     <Router>
-      <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
-      <Routes>
-        {/* Login */}
-        <Route
-          path="/"
-          element={!isAuthenticated ? <Login onLogin={handleLogin} /> : <Navigate to="/graficas" />}
-        />
-        {/* Graficas */}
-        <Route
-          path="/graficas"
-          element={isAuthenticated ? <Graficas /> : <Navigate to="/" />}
-        />
-        {/* Edición */}
-        <Route
-          path="/edicion"
-          element={isAuthenticated ? <Edicion /> : <Navigate to="/" />}
-        />
-      </Routes>
-      <Footer />
+      <div className="app-container">
+        <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+        <main className="main-content">
+          <Routes>
+            {/* Login */}
+            <Route
+              path="/"
+              element={!isAuthenticated ? <Login onLogin={handleLogin} /> : <Navigate to="/graficas" />}
+            />
+            {/* Graficas */}
+            <Route
+              path="/graficas"
+              element={isAuthenticated ? <Graficas /> : <Navigate to="/" />}
+            />
+            {/* Edición */}
+            <Route
+              path="/edicion"
+              element={isAuthenticated ? <Edicion /> : <Navigate to="/" />}
+            />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </Router>
   );
 }

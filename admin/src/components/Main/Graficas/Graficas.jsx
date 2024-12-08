@@ -1,7 +1,5 @@
 import React, { useState, useCallback } from "react";
 import { PieChart, Pie, Sector } from "recharts";
-// import "../../styles/Graficas.scss"; 
-
 
 const data = [
   { name: "Group A", value: 400 },

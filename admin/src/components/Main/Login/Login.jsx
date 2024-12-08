@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
-const Login = () => {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState("");
-  
+const Login = ({ onLogin }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
 
   //este useEffect testea la conexión con el Backend y la BBDD:
   useEffect(() => {
@@ -46,50 +42,38 @@ const Login = () => {
 
 
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-        const response = await axios({
-          method: 'post',
-          url: 'https://desafiotripulacionesg1.onrender.com/api/admin/login',
-          data: {email, password},
-          withCredentials: true
-        });
-        if (response.status === 200){
-          alert(`admin login was succesful`)
-          //actualizar el context y navigate al dashboard
-        }
 
-
-
-
-    }
-    catch (error){
-      alert(`wrong credentials`)
-    }
-
+    onLogin();
   };
 
-
-  return <>
-    {/* {message !="" ?  :""} */}
-    <h1>Login</h1>
-    <form onSubmit={handleLogin}>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Contraseña"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Iniciar sesión</button>
-    </form>
-  </>
+  return (
+    <main className="login-container">
+      <div className="login">
+        <h1 className="login-title">Panel de Administrador</h1>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <input
+            type="email"
+            className="login-input"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            className="login-input"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="login-button" type="submit">
+            Iniciar sesión
+          </button>
+        </form>
+      </div>
+    </main>
+  );
 
 };
 
