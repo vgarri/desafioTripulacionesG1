@@ -4,8 +4,47 @@ const Login = ({ onLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+
+  //este useEffect testea la conexión con el Backend y la BBDD:
+  useEffect(() => {
+    const testConnection = async () => {
+      try {
+        const request = await axios({
+          method: 'get',
+          url: 'https://desafiotripulacionesg1.onrender.com/api/admin/test',
+          withCredentials: true
+        })
+        if (request) {
+          console.log()
+          setMessage("connected to server");
+          setTimeout(() => setMessage(""), 2000);
+        };
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    testConnection();
+  }, [])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     onLogin();
   };
 
@@ -35,6 +74,7 @@ const Login = ({ onLogin }) => {
       </div>
     </main>
   );
+
 };
 
 export default Login;
