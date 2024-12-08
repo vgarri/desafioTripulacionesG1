@@ -1,0 +1,95 @@
+@import '../utils/variables';
+
+.task-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: $light;
+  border: 1px solid $primary-color;
+  border-radius: 8px;
+  box-shadow: $box-shadow;
+
+  &.completed {
+    background-color: rgba($primary-color, 0.2);
+    text-decoration: line-through;
+    color: $secondary-color;
+  }
+
+  h3 {
+    font-family: $fuente;
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: $primary-color;
+    margin: 0;
+  }
+
+  p {
+    font-family: $fuente;
+    font-weight: 400;
+    font-size: 1rem;
+    margin: 0;
+    color: $secondary-color;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    button {
+      font-family: $fuente;
+      font-weight: 400;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      color: $light;
+      background-color: $secondary-color;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: map-get($complementary-colors, "aqua");
+        transform: scale(1.05);
+      }
+
+      &:focus {
+        outline: 2px solid map-get($complementary-colors, "yellow");
+      }
+
+      &:first-of-type {
+        background-color: $primary-color;
+
+        &:hover {
+          background-color: map-get($complementary-colors, "red");
+        }
+      }
+
+      &:last-of-type {
+        background-color: map-get($complementary-colors, "yellow");
+
+        &:hover {
+          background-color: map-get($complementary-colors, "aqua");
+        }
+      }
+    }
+  }
+
+  @media (max-width: $mobile-breakpoint) {
+    .actions {
+      flex-direction: row; /* Mantén los botones en fila */
+      gap: 0.5rem; /* Aumenta el espacio entre los botones */
+      justify-content: center; /* Centra los botones */
+  
+      button {
+        font-size: 1rem; /* Aumenta el tamaño de la fuente */
+        padding: 0.8rem 1.5rem; /* Más relleno para botones grandes */
+        width: auto; /* Ajusta el ancho al contenido */
+      }
+    }
+  }  
+}

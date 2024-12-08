@@ -1,0 +1,79 @@
+@import '../utils/variables';
+
+.edicion {
+  padding: 2rem;
+  text-align: center;
+
+  h1 {
+    font-family: $fuente;
+    font-weight: 300;
+    font-size: 2rem;
+    color: $primary-color;
+    margin-bottom: 2rem;
+  }
+
+  .form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+
+    input {
+      font-family: $fuente;
+      font-size: 1rem;
+      padding: 0.5rem;
+      border: 1px solid $secondary-color;
+      border-radius: 5px;
+      width: 200px;
+
+      &:focus {
+        outline: none;
+        border: 2px solid $primary-color;
+      }
+    }
+
+    button {
+      font-family: $fuente;
+      font-weight: 400;
+      font-size: 1rem;
+      color: $light;
+      background-color: $primary-color;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: map-get($complementary-colors, "red");
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+    button {
+      font-family: $fuente;
+      font-weight: 400;
+      font-size: 1rem;
+      color: $light;
+      background-color: $primary-color;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: map-get($complementary-colors, "yellow");
+        transform: scale(1.05);
+      }
+    }
+  }
+}

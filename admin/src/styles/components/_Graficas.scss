@@ -1,0 +1,43 @@
+@import '../utils/variables';
+
+.graficas-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  background-color: $light; /* Fondo blanco para contraste */
+  color: $secondary-color; /* Color de texto principal */
+
+  @media (max-width: $mobile-breakpoint) {
+    padding: 0.5rem; /* Reduce el espacio en pantallas pequeñas */
+  }
+
+  h2 {
+    font-family: $fuente;
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    color: $primary-color; /* Color destacado para el título */
+  }
+
+  .pie-chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba($primary-color, 0.05);
+    border: 2px solid $primary-color; /* Borde para destacar */
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: $box-shadow;
+    max-width: 90%;
+    width: 400px;
+    height: 400px;
+
+    @media (max-width: $mobile-breakpoint) {
+      width: 370px;
+      height: 200px; 
+    }
+  }
+}
