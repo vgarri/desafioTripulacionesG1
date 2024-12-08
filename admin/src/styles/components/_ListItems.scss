@@ -6,15 +6,19 @@
   gap: 1rem;
   padding: 1rem;
   margin-bottom: 1rem;
-  background-color: $light;
+  background-color: rgba($primary-color, 0.05);
   border: 1px solid $primary-color;
   border-radius: 8px;
   box-shadow: $box-shadow;
 
   &.completed {
-    background-color: rgba($primary-color, 0.2);
-    text-decoration: line-through;
-    color: $secondary-color;
+    background-color: rgba($primary-color, 0.3); 
+    color: $secondary-color; 
+  
+    h3, p {
+      text-decoration: line-through; 
+      color: $primary-color; 
+    }
   }
 
   h3 {
@@ -45,35 +49,50 @@
       font-weight: 400;
       font-size: 0.9rem;
       padding: 0.5rem 1rem;
-      color: $light;
-      background-color: $secondary-color;
-      border: none;
+      color: $primary-color; 
+      background-color: transparent; 
+      border: 1px solid $primary-color; 
       border-radius: 5px;
       cursor: pointer;
       transition: all 0.3s ease;
 
       &:hover {
-        background-color: map-get($complementary-colors, "aqua");
+        background-color: rgba($primary-color, 0.1); 
+        color: $primary-color; 
         transform: scale(1.05);
       }
 
       &:focus {
-        outline: 2px solid map-get($complementary-colors, "yellow");
+        outline: 2px solid map-get($complementary-colors, "yellow"); 
       }
 
       &:first-of-type {
-        background-color: $primary-color;
+        color: $primary-color; 
+        background-color: transparent;
 
         &:hover {
-          background-color: map-get($complementary-colors, "red");
+          background-color: rgba($primary-color, 0.7); 
+          color: $light; 
         }
       }
 
-      &:last-of-type {
-        background-color: map-get($complementary-colors, "yellow");
+      &:nth-of-type(2) { 
+        color: $primary-color;
+        background-color: transparent;
 
         &:hover {
-          background-color: map-get($complementary-colors, "aqua");
+          background-color: rgba($primary-color, 0.7);
+          color: $light;
+        }
+      }
+      
+      &:last-of-type {
+        color: $primary-color; 
+        background-color: transparent;
+        
+        &:hover {
+          background-color: rgba($primary-color, 0.7);
+          color: $light; 
         }
       }
     }
@@ -81,14 +100,14 @@
 
   @media (max-width: $mobile-breakpoint) {
     .actions {
-      flex-direction: row; /* Mantén los botones en fila */
-      gap: 0.5rem; /* Aumenta el espacio entre los botones */
-      justify-content: center; /* Centra los botones */
+      flex-direction: row; 
+      gap: 0.5rem; 
+      justify-content: center; 
   
       button {
-        font-size: 1rem; /* Aumenta el tamaño de la fuente */
-        padding: 0.8rem 1.5rem; /* Más relleno para botones grandes */
-        width: auto; /* Ajusta el ancho al contenido */
+        font-size: 1rem; 
+        padding: 0.8rem 1.5rem; 
+        width: auto; 
       }
     }
   }  
