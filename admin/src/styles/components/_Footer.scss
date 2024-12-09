@@ -47,12 +47,12 @@
     border: none;
     padding: 0.5rem 1rem;
     font-size: 1rem;
-    border-radius: 5px;
+    border-radius: 0px;
     cursor: pointer;
     transition: all 0.3s ease;
 
     &:hover {
-      background-color: map-get($complementary-colors, "red");
+      background-color: map-get($complementary-colors, "yellow");
       transform: scale(1.05);
     }
   }

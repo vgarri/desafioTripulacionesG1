@@ -41,7 +41,7 @@
       background-color: $primary-color;
       border: none;
       padding: 0.5rem 1rem;
-      border-radius: 5px;
+      border-radius: 0px;
       cursor: pointer;
       transition: all 0.3s ease;
 
@@ -77,16 +77,17 @@
       font-family: $fuente;
       font-weight: 400;
       font-size: 1rem;
-      color: $primary-color;
-      background-color: $light;
-      border: 1px solid $primary-color;
+      color: $secondary-color;
+      background-color: transparent;
+      border: 2px solid $secondary-color;
       padding: 0.5rem 1rem;
-      border-radius: 5px;
+      border-radius: 0px;
       cursor: pointer;
       transition: all 0.3s ease;
 
       &:hover {
-        background-color: rgba($primary-color, 0.2);
+        color: $light;
+        background-color: $secondary-color;
         transform: scale(1.05);
       }
     }
