@@ -32,6 +32,12 @@ const Login = ({ onLogin }) => {
     testConnection();
   }, []) 
 
+const LoginTest = (e) => {
+  onLogin();
+}
+
+
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try{
@@ -106,7 +112,11 @@ const Login = ({ onLogin }) => {
       <div className="login">
       <img src="/logo-192x192.png" alt="Admin Panel" className="login-image" />
         <h1 className="login-title">Panel de Administrador</h1>
+
         <form className="login-form" onSubmit={onLogin}>
+
+
+
           <input
             type="email"
             className="login-input"

@@ -4,12 +4,33 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Login from './components/Main/Login/Login';
 import Graficas from './components/Main/Graficas/Graficas';
+import VisorGraficas from './components/Main/VisorGraficas/VisorGraficas';
 import Edicion from './components/Main/Edicion/Edicion';
 import '@fortawesome/fontawesome-free/css/all.css';
+import { adminContext } from "./context/adminContext";
+
 
 import './styles/styles.scss';
 
 function App() {
+  const [botonPulsado, setBotonPulsado] = useState("");//estado a usar por el context
+  
+  const updateBotonPulsado = (newBoton) => { //funcion de context
+    const {boton} = newBoton
+    setBotonPulsado(boton)
+  };
+  //export del context
+  const botonGrafica = {
+    botonPulsado,
+    updateBotonPulsado
+  }
+
+
+
+
+
+
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleLogin = () => setIsAuthenticated(true);
@@ -20,6 +41,7 @@ function App() {
 
   return (
     <Router>
+      <adminContext.Provider value={botonGrafica}>
       <div className="app-container">
         <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
         <main className="main-content">
@@ -32,7 +54,7 @@ function App() {
             {/* Graficas */}
             <Route
               path="/graficas"
-              element={isAuthenticated ? <Graficas /> : <Navigate to="/" />}
+              element={isAuthenticated ? <VisorGraficas /> : <Navigate to="/" />}
             />
             {/* Edición */}
             <Route
@@ -43,6 +65,7 @@ function App() {
         </main>
         <Footer />
       </div>
+      </adminContext.Provider>
     </Router>
   );
 }
