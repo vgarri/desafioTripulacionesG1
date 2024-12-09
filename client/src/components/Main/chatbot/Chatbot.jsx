@@ -172,6 +172,7 @@ function Chatbot() {
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                 autoFocus
               />
               <button onClick={handleSubmit}>Enviar</button>

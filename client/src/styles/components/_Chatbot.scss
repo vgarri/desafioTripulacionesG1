@@ -1,0 +1,115 @@
+@import '../utils/variables';
+
+.chatbot-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: rgba($light, 0.8);
+  backdrop-filter: blur(5px);
+  text-align: center;
+
+  .chatbot-history {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .chat-message {
+      display: inline-block;
+      max-width: 70%;
+      padding: 1rem 1.5rem;
+      border-radius: 20px;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: $light;
+      text-align: left;
+      position: relative;
+
+      &.user {
+        align-self: flex-start;
+        background-color: lighten($secondary-color, 10%);
+      }
+
+      &.bot {
+        align-self: flex-end;
+        background-color: $primary-color;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 0;
+        height: 0;
+        border-style: solid;
+      }
+
+      &.user::after {
+        left: -10px;
+        border-width: 10px 10px 0 0;
+        border-color: lighten($secondary-color, 10%) transparent transparent transparent;
+      }
+
+      &.bot::after {
+        right: -10px;
+        border-width: 10px 0 0 10px;
+        border-color: $primary-color transparent transparent transparent;
+      }
+    }
+  }
+
+  h2 {
+    color: $secondary-color;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .chat-input {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    input[type="text"] {
+      flex: 1;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: 2px solid $gris;
+      border-radius: 10px;
+      outline: none;
+
+      &:focus {
+        border-color: $primary-color;
+        box-shadow: 0 0 8px rgba($primary-color, 0.5);
+      }
+    }
+
+    button {
+      background-color: $primary-color;
+      color: $light;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+
+  p {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+}

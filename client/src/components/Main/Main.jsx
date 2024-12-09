@@ -3,33 +3,25 @@ import Chatbot from "./chatbot/Chatbot";
 import ChatbotSanitario from "./ChatbotSanitario/ChatbotSanitario";
 
 const Main = () => {
-  const [isProfesional, setIsProfesional] = useState(null); // Estado para determinar si es profesional o usuario
+  const [isProfesional, setIsProfesional] = useState(null);
 
-  const handleUserClick = () => {
-    setIsProfesional(false); // Cuando elige usuario, muestra Chatbot
-  };
-
-  const handleProfesionalClick = () => {
-    setIsProfesional(true); // Cuando elige profesional, muestra ChatbotSanitario
-  };
+  const handleUserClick = () => setIsProfesional(false);
+  const handleProfesionalClick = () => setIsProfesional(true);
 
   return (
     <div>
-      {/* Solo mostrar los botones si no se ha hecho una selección */}
       {isProfesional === null && (
-        <div>
-          <button onClick={handleUserClick}>Soy Usuario</button>
-          <button onClick={handleProfesionalClick}>Soy Profesional</button>
+        <div className="main-selection-container">
+          <p>Por favor, elige si eres un Usuario o un Profesional.</p>
+          <div className="button-group">
+            <button onClick={handleUserClick}>Soy Usuario</button>
+            <button onClick={handleProfesionalClick}>Soy Profesional</button>
+          </div>
         </div>
       )}
 
-      {/* Mostrar el componente correspondiente según la selección */}
-      {isProfesional === null ? (
-        <p>Por favor, elige si eres un Usuario o un Profesional.</p>
-      ) : isProfesional ? (
-        <ChatbotSanitario /> // Muestra ChatbotSanitario si es Profesional
-      ) : (
-        <Chatbot /> // Muestra Chatbot si es Usuario
+      {isProfesional !== null && (
+        isProfesional ? <ChatbotSanitario /> : <Chatbot />
       )}
     </div>
   );
