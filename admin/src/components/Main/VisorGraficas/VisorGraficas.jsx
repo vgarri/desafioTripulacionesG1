@@ -11,6 +11,8 @@ const VisorGraficas = () => {
   const [verEstadisticasUso, setVerEstadisticasUso] = useState(false);
   const navigate = useNavigate();
   const { botonPulsado } = useContext(adminContext);
+
+
   const renderGraficasUsoAplicacion = () => {
     return <>
     <GraficasUsoAplicacion/>
@@ -32,28 +34,49 @@ const VisorGraficas = () => {
     setVerEstadisticasUso(false);
   }
 
+  const handleIrAGraficasUsuarios = () => {
+    navigate("/graficas-usuarios"); // Redirige a la ruta
+  };
 
 
 
-  return <>
- { pantallaGeneral ? <section>
-    <button onClick={handleVerGraficas}>Ver gráficas de uso del chatbot</button>
-  </section>
-  : ""}
-  {verGraficas ? <section>
-    <article>
-     { verEstadisticasUso ? <button onClick={handleEstadisticasUso}>Estadísticas de uso</button> : ""}
-      { !atras ? <button onClick={handleAtras}>Atrás</button> : ""}
-    </article>
-    {!atras ? <article>
-    {renderGraficasUsoAplicacion()}
-    </article> : ""}
-    
-    
-    
-    
-    </section> : ""}
-    </>;
+
+  return (
+    <>
+      {pantallaGeneral ? (
+        <section>
+          <button onClick={handleVerGraficas}>Ver gráficas de uso del chatbot</button>
+          <button onClick={handleIrAGraficasUsuarios}>
+            Ir a Graficas Usuarios
+          </button>
+        </section>
+      ) : (
+        ""
+      )}
+      {verGraficas ? (
+        <section>
+          <article>
+            {verEstadisticasUso ? (
+              <button onClick={handleEstadisticasUso}>
+                Estadísticas de uso
+              </button>
+            ) : (
+              ""
+            )}
+            {!atras ? <button onClick={handleAtras}>Atrás</button> : ""}
+          </article>
+          {!atras ? (
+            <article>{renderGraficasUsoAplicacion()}</article>
+          ) : (
+            ""
+          )}
+        </section>
+      ) : (
+        ""
+      )}
+    </>
+  );
+
 };
 
 export default VisorGraficas;

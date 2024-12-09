@@ -1,7 +1,182 @@
-import React from "react";
+import React, { useState } from 'react';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+import {
+  RadarChart,
+  Radar,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+} from 'recharts';
+import {
+  LineChart,
+  Line,
+} from 'recharts';
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem as MuiMenuItem,
+} from '@mui/material';
+
+
+
+// Datos para las gráficas existentes
+const data1 = [
+  { name: 'Heterosexuales', conTratamiento: 100, sinTratamiento: 50, sinVIH: 50 },
+  { name: 'Homosexuales', conTratamiento: 150, sinTratamiento: 70, sinVIH: 150 },
+  { name: 'Bisexuales', conTratamiento: 300, sinTratamiento: 40, sinVIH: 360 },
+  { name: 'Pansexuales', conTratamiento: 200, sinTratamiento: 25, sinVIH: 265 },
+  { name: 'Asexuales', conTratamiento: 40, sinTratamiento: 12, sinVIH: 52 },
+  { name: 'Demisexuales', conTratamiento: 40, sinTratamiento: 5, sinVIH: 45 },
+  { name: 'Otros', conTratamiento: 30, sinTratamiento: 15, sinVIH: 50 },
+];
+
+const data2 = [
+  { name: 'Cisgénero hombre', tratamiento: 1000, sinTratamiento: 1010, sinVIH: 5000 },
+  { name: 'Cisgénero mujer', tratamiento: 200, sinTratamiento: 213, sinVIH: 4000 },
+  { name: 'Bigénero', tratamiento: 66, sinTratamiento: 55, sinVIH: 500 },
+  { name: 'Agénero', tratamiento: 200, sinTratamiento: 220, sinVIH: 1500 },
+  { name: 'Género fluido', tratamiento: 55, sinTratamiento: 65, sinVIH: 200 },
+  { name: 'Intergénero', tratamiento: 200, sinTratamiento: 210, sinVIH: 700 },
+  { name: 'Pangénero', tratamiento: 100, sinTratamiento: 105, sinVIH: 600 },
+  { name: 'No binario', tratamiento: 52, sinTratamiento: 60, sinVIH: 300 },
+  { name: 'Transgénero', tratamiento: 54, sinTratamiento: 70, sinVIH: 400 },
+  { name: 'Transexual', tratamiento: 100, sinTratamiento: 101, sinVIH: 200 },
+  { name: 'Trigénero', tratamiento: 100, sinTratamiento: 500, sinVIH: 600 },
+  { name: 'Genderqueer', tratamiento: 22, sinTratamiento: 30, sinVIH: 100 },
+  { name: 'Otros', tratamiento: 20, sinTratamiento: 20, sinVIH: 50 },
+];
+
+const dataRadar = [
+  { subject: 'Heterosexuales', A: 100, B: 50, C: 30 },
+  { subject: 'Homosexuales', A: 150, B: 70, C: 60 },
+  { subject: 'Bisexuales', A: 300, B: 40, C: 90 },
+  { subject: 'Pansexuales', A: 200, B: 25, C: 30 },
+  { subject: 'Asexuales', A: 40, B: 12, C: 8 },
+];
+
+// Datos para las comunidades autónomas
+const dataCommunities = [
+  { name: 'Andalucía', Enero: 300, Febrero: 280, Marzo: 350, Abril: 320, Mayo: 300, Junio: 290, Julio: 330, Agosto: 310, Septiembre: 350, Octubre: 340, Noviembre: 310, Diciembre: 300 },
+  { name: 'Aragón', Enero: 150, Febrero: 180, Marzo: 170, Abril: 160, Mayo: 155, Junio: 165, Julio: 160, Agosto: 155, Septiembre: 170, Octubre: 165, Noviembre: 150, Diciembre: 140 },
+  { name: 'Islas Baleares', Enero: 200, Febrero: 190, Marzo: 210, Abril: 180, Mayo: 220, Junio: 210, Julio: 230, Agosto: 220, Septiembre: 240, Octubre: 230, Noviembre: 200, Diciembre: 190 },
+  { name: 'Canarias', Enero: 120, Febrero: 140, Marzo: 130, Abril: 135, Mayo: 125, Junio: 150, Julio: 145, Agosto: 140, Septiembre: 160, Octubre: 155, Noviembre: 145, Diciembre: 135 },
+  { name: 'Cantabria', Enero: 170, Febrero: 160, Marzo: 150, Abril: 165, Mayo: 180, Junio: 170, Julio: 160, Agosto: 155, Septiembre: 150, Octubre: 155, Noviembre: 160, Diciembre: 170 },
+  { name: 'Castilla-La Mancha', Enero: 130, Febrero: 120, Marzo: 140, Abril: 135, Mayo: 150, Junio: 160, Julio: 170, Agosto: 165, Septiembre: 180, Octubre: 175, Noviembre: 150, Diciembre: 140 },
+  { name: 'Castilla y León', Enero: 210, Febrero: 190, Marzo: 200, Abril: 205, Mayo: 210, Junio: 220, Julio: 215, Agosto: 210, Septiembre: 230, Octubre: 225, Noviembre: 220, Diciembre: 210 },
+  { name: 'Cataluña', Enero: 300, Febrero: 310, Marzo: 320, Abril: 330, Mayo: 340, Junio: 350, Julio: 360, Agosto: 350, Septiembre: 340, Octubre: 330, Noviembre: 320, Diciembre: 310 },
+  { name: 'Comunidad de Madrid', Enero: 450, Febrero: 460, Marzo: 470, Abril: 480, Mayo: 490, Junio: 500, Julio: 510, Agosto: 500, Septiembre: 490, Octubre: 480, Noviembre: 470, Diciembre: 460 },
+];
+
+// Colores para las comunidades autónomas
+const communityColors = {
+  'Andalucía': '#FFEB3B',
+  'Aragón': '#F50057',
+  'Islas Baleares': '#FF9800',
+  'Canarias': '#2196F3',
+  'Cantabria': '#9C27B0',
+  'Castilla-La Mancha': '#C2185B',
+  'Castilla y León': '#3F51B5',
+  'Cataluña': '#4CAF50',
+  'Comunidad de Madrid': '#FF5722',
+};
 
 const GraficasUsuarios = () => {
-  return <div>GraficasUsuarios</div>;
+  const [selectedCommunity, setSelectedCommunity] = useState('Andalucía');
+
+  const handleCommunityChange = (event) => {
+    setSelectedCommunity(event.target.value);
+  };
+
+  const filteredData = dataCommunities.filter((community) => community.name === selectedCommunity);
+
+  return (
+    <div>
+      {/* Gráficas existentes */}
+      <h3>Personas con/sin vih - Orientación Sexual</h3>
+      <ResponsiveContainer width="100%" height={500}>
+        <BarChart
+          data={data1}
+          margin={{ top: 30, right: 30, left: 20, bottom: 70 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" angle={-45} textAnchor="end" />
+          <YAxis />
+          <Tooltip />
+          <Legend verticalAlign="top" height={50} />
+          <Bar dataKey="conTratamiento" stackId="a" fill="#ff5722" name="Con tratamiento" />
+          <Bar dataKey="sinTratamiento" stackId="a" fill="#d500f9" name="Sin tratamiento" />
+          <Bar dataKey="sinVIH" stackId="a" fill="#00bcd4" name="Sin vih" />
+        </BarChart>
+      </ResponsiveContainer>
+
+      <h3>Personas con/sin vih - Identidad de Género</h3>
+      <ResponsiveContainer width="100%" height={500}>
+        <BarChart
+          data={data2}
+          margin={{ top: 30, right: 30, left: 20, bottom: 70 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" angle={-45} textAnchor="end" />
+          <YAxis />
+          <Tooltip />
+          <Legend verticalAlign="top" height={50} />
+          <Bar dataKey="tratamiento" stackId="a" fill="#ff5722" name="Tratamiento" />
+          <Bar dataKey="sinTratamiento" stackId="a" fill="#d500f9" name="Sin tratamiento" />
+          <Bar dataKey="sinVIH" stackId="a" fill="#00bcd4" name="Sin vih" />
+        </BarChart>
+      </ResponsiveContainer>
+
+      <h3>Radar Chart</h3>
+      <ResponsiveContainer width="100%" height={500}>
+        <RadarChart outerRadius="90%" data={dataRadar}>
+          <PolarGrid />
+          <PolarAngleAxis dataKey="subject" />
+          <PolarRadiusAxis angle={30} domain={[0, 400]} />
+          <Radar name="Total" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+        </RadarChart>
+      </ResponsiveContainer>
+
+      <FormControl fullWidth>
+        <InputLabel id="community-select-label">Comunidad Autónoma</InputLabel>
+        <Select
+          labelId="community-select-label"
+          value={selectedCommunity}
+          onChange={handleCommunityChange}
+        >
+          {dataCommunities.map((community) => (
+            <MuiMenuItem key={community.name} value={community.name}>
+              {community.name}
+            </MuiMenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      {/* Gráfico de Comunidades Autónomas */}
+      <h3>Comunidad Autónoma: {selectedCommunity}</h3>
+      <ResponsiveContainer width="100%" height={500}>
+        <LineChart data={filteredData} margin={{ top: 20, right: 20, left: 20, bottom: 60 }}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="Enero" stroke={communityColors[selectedCommunity]} />
+          <Line type="monotone" dataKey="Febrero" stroke={communityColors[selectedCommunity]} />
+          <Line type="monotone" dataKey="Marzo" stroke={communityColors[selectedCommunity]} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
 };
 
 export default GraficasUsuarios;
