@@ -20,6 +20,7 @@ const VisorGraficas = () => {
   const handleVerGraficas = () => {
     setVerGraficas(true);
     setPantallaGeneral(false);
+    setAtras(false)
   }
   const handleEstadisticasUso = () => {
     setVerEstadisticasUso(true);
@@ -28,6 +29,7 @@ const VisorGraficas = () => {
   const handleAtras = () => {
     setAtras(true);
     setPantallaGeneral(true);
+    setVerEstadisticasUso(false);
   }
 
 
@@ -43,9 +45,9 @@ const VisorGraficas = () => {
      { verEstadisticasUso ? <button onClick={handleEstadisticasUso}>Estadísticas de uso</button> : ""}
       { !atras ? <button onClick={handleAtras}>Atrás</button> : ""}
     </article>
-    <article>
+    {!atras ? <article>
     {renderGraficasUsoAplicacion()}
-    </article>
+    </article> : ""}
     
     
     
