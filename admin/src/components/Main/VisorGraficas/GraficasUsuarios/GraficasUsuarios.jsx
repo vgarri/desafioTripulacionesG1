@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   BarChart,
   Bar,
@@ -91,16 +92,20 @@ const communityColors = {
 };
 
 const GraficasUsuarios = () => {
+  const navigate = useNavigate();
+  const [atras, setAtras] = useState("");
   const [selectedCommunity, setSelectedCommunity] = useState('Andalucía');
 
   const handleCommunityChange = (event) => {
     setSelectedCommunity(event.target.value);
   };
 
+
   const filteredData = dataCommunities.filter((community) => community.name === selectedCommunity);
 
   return (
     <div>
+      <button onClick={()=> navigate('/graficas')}>Atrás</button>
       {/* Gráficas existentes */}
       <h3>Personas con/sin vih - Orientación Sexual</h3>
       <ResponsiveContainer width="100%" height={500}>
