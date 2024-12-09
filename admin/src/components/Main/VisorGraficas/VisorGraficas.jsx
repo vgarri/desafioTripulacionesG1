@@ -45,7 +45,7 @@ const VisorGraficas = () => {
     <>
       {pantallaGeneral ? (
         <section>
-          <button onClick={handleVerGraficas}>Ver Gráficas</button>
+          <button onClick={handleVerGraficas}>Ver gráficas de uso del chatbot</button>
           <button onClick={handleIrAGraficasUsuarios}>
             Ir a Graficas Usuarios
           </button>
@@ -76,6 +76,7 @@ const VisorGraficas = () => {
       )}
     </>
   );
+
 };
 
 export default VisorGraficas;
