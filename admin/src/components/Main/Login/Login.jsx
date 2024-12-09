@@ -6,25 +6,25 @@ const Login = ({ onLogin }) => {
 
 
   //este useEffect testea la conexión con el Backend y la BBDD:
-  useEffect(() => {
-    const testConnection = async () => {
-      try {
-        const request = await axios({
-          method: 'get',
-          url: 'https://desafiotripulacionesg1.onrender.com/api/admin/test',
-          withCredentials: true
-        })
-        if (request) {
-          console.log()
-          setMessage("connected to server");
-          setTimeout(() => setMessage(""), 2000);
-        };
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    testConnection();
-  }, [])
+  // useEffect(() => {
+  //   const testConnection = async () => {
+  //     try {
+  //       const request = await axios({
+  //         method: 'get',
+  //         url: 'https://desafiotripulacionesg1.onrender.com/api/admin/test',
+  //         withCredentials: true
+  //       })
+  //       if (request) {
+  //         console.log()
+  //         setMessage("connected to server");
+  //         setTimeout(() => setMessage(""), 2000);
+  //       };
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  //   testConnection();
+  // }, [])
 
 
 

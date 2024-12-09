@@ -94,7 +94,7 @@ function Chatbot() {
 
   const handleSubmitForm = async () => {
     try {
-      const response = await fetch("http://18.203.245.199:8000/respuesta-usuario", {
+      const response = await fetch("http://52.214.54.221:8000/respuesta-profesional", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
