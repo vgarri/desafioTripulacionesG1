@@ -1,0 +1,42 @@
+@import '../utils/variables';
+
+.graficas-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  color: $secondary-color;
+
+  @media (max-width: $mobile-breakpoint) {
+    padding: 0.5rem; 
+  }
+
+  h2 {
+    font-family: $fuente;
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    color: $primary-color; 
+  }
+
+  .pie-chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba($light, 0.5);
+    border: 2px solid $primary-color; 
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: $box-shadow;
+    max-width: 90%;
+    width: 400px;
+    height: 400px;
+
+    @media (max-width: $mobile-breakpoint) {
+      width: 370px;
+      height: 200px; 
+    }
+  }
+}
