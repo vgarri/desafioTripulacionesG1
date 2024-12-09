@@ -32,6 +32,12 @@ const Login = ({ onLogin }) => {
     testConnection();
   }, []) 
 
+const LoginTest = (e) => {
+  onLogin();
+}
+
+
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try{
@@ -105,7 +111,8 @@ const Login = ({ onLogin }) => {
     <main className="login-container">
       <div className="login">
         <h1 className="login-title">Panel de Administrador</h1>
-        <form className="login-form" onSubmit={handleSubmit}>
+        {/* <form className="login-form" onSubmit={LoginTest}>  */}
+        <form className="login-form" onSubmit={handleSubmit}> 
           <input
             type="email"
             className="login-input"
