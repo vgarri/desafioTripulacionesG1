@@ -1,0 +1,29 @@
+@import '../utils/variables';
+
+.header {
+  width: 100%;
+  padding: 0.5rem 2rem;
+  z-index: 1000;
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    @media (max-width: $mobile-breakpoint) {
+      flex-direction: column; 
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  .header-logo {
+    height: 76px;
+    width: auto;
+
+    @media (max-width: $mobile-breakpoint) {
+      height: 60px; 
+    }
+  }
+}

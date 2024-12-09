@@ -1,15 +1,14 @@
 import React, { useState, useCallback } from "react";
-import { PieChart, Pie, Sector } from "recharts";
-// import "../../styles/Graficas.scss"; 
-
+import { PieChart, Pie, Sector, Cell } from "recharts";
 
 const data = [
   { name: "Group A", value: 400 },
   { name: "Group B", value: 300 },
   { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 }
+  { name: "Group D", value: 200 },
 ];
 
+const colors = ["#E2007E", "#1D1D1B", "#44BAC1", "#FFB024"]; // Array de colores personalizados
 
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
@@ -24,7 +23,7 @@ const renderActiveShape = (props) => {
     fill,
     payload,
     percent,
-    value
+    value,
   } = props;
 
   const sin = Math.sin(-RADIAN * midAngle);
@@ -88,7 +87,6 @@ const renderActiveShape = (props) => {
 const Graficas = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Callback para manejar el evento onMouseEnter
   const onPieEnter = useCallback(
     (_, index) => {
       setActiveIndex(index);
@@ -97,22 +95,27 @@ const Graficas = () => {
   );
 
   return (
-    <div>
+    <div className="graficas-page">
       <h2>Gráfica de Ejemplo</h2>
-      <PieChart width={400} height={400}>
-        <Pie
-          activeIndex={activeIndex}
-          activeShape={renderActiveShape}
-          data={data}
-          cx={200}
-          cy={200}
-          innerRadius={60}
-          outerRadius={80}
-          fill="#8884d8"
-          dataKey="value"
-          onMouseEnter={onPieEnter}
-        />
-      </PieChart>
+      <div className="pie-chart-container">
+        <PieChart width={400} height={400}>
+          <Pie
+            activeIndex={activeIndex}
+            activeShape={renderActiveShape}
+            data={data}
+            cx={200}
+            cy={200}
+            innerRadius={60}
+            outerRadius={80}
+            dataKey="value"
+            onMouseEnter={onPieEnter}
+          >
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+            ))}
+          </Pie>
+        </PieChart>
+      </div>
     </div>
   );
 };

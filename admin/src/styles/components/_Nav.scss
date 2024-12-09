@@ -1,0 +1,93 @@
+@import '../utils/variables';
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+
+  @media (max-width: $mobile-breakpoint) {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-grow: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    @media (max-width: $mobile-breakpoint) {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+  .btn-link {
+    color: $secondary-color;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: $primary-color;
+      transform: scale(1.1);
+    }
+
+    &:focus {
+      outline: 2px solid $primary-color;
+    }
+
+    &.active {
+      color: $primary-color;
+      font-weight: 400;
+      outline: 2px solid $primary-color;
+      text-decoration: none;
+    }
+  }
+
+  .nav-logout {
+    display: flex;
+    justify-content: flex-end;
+
+    @media (max-width: $mobile-breakpoint) {
+      margin-top: 0.5rem;
+      justify-content: center;
+    }
+
+    /* Estilos del botón de cerrar sesión */
+    .btn-link {
+      background-color: $primary-color; 
+      color: $light; 
+      padding: 0.5rem 1.5rem;
+      border-radius: 0px; 
+      font-weight: 400;
+      font-size: 1.2rem;
+      border: none;
+      box-shadow: $box-shadow;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: map-get($complementary-colors, "yellow");
+        transform: scale(1.05);
+      }
+
+      &:focus {
+        outline: 2px solid map-get($complementary-colors, "aqua");
+      }
+    }
+  }
+}

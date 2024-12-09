@@ -1,14 +1,12 @@
 import React from "react";
-import Graficas from "./Graficas/Graficas";
 
 const Main = () => {
   return (
-    <div>
-      <h1>Sección Principal</h1>
-      <Graficas />
-    </div>
+    <main className="main-container">
+      <h1>Contenido principal</h1>
+      <p>Aquí podemos poner más cosas.</p>
+    </main>
   );
 };
 
 export default Main;
-

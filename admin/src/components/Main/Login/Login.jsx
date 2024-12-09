@@ -1,85 +1,141 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import Alert from '@mui/material/Alert';
+const Login = ({ onLogin }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
-const Login = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [errors, setErrors] = useState({ email: "", password: "" });
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  //este useEffect testea la conexión con el Backend y la BBDD:
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+   useEffect(() => {
+    const testConnection = async () => {
+      try {
+        const request = await axios({
+          method: 'get',
+          url: 'https://desafiotripulacionesg1.onrender.com/api/admin/test',
+          withCredentials: true
+        })
+        if (request) {
+          
+          setMessage("connected to server");
+          console.log(message)
+          setTimeout(() => setMessage(""), 2000);
+        };
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    testConnection();
+  }, []) 
+
+const LoginTest = (e) => {
+  onLogin();
+}
+
+
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try{
+        const response = await axios({
+          method: 'post',
+          url: 'https://desafiotripulacionesg1.onrender.com/api/admin/login',
+          data: {email, password},
+          withCredentials: true
+        });
+        if (response.status === 200){
+          alert(`admin login was succesful`)
+          //actualizar el context y navigate al dashboard
+          
+        }
+
+
+
+
+
+    }
+    catch (error){
+      alert(`wrong credentials`)
+    }
+
   };
 
-  const handleSubmit = (e) => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    try{
+      const response = await axios({
+        method: 'post',
+        url: 'https://desafiotripulacionesg1.onrender.com/api/admin/login',
+        data: {email, password},
+        withCredentials: true
+      });
+      if (response.status === 200){
+        onLogin();
+        alert(`admin login was succesful`)
+        
+        navigate('./graficas')
+        //actualizar el context y navigate al dashboard
+      }
 
-    // Validar el correo
-    if (!emailRegex.test(formData.email)) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        email: "Por favor, ingresa un correo válido.",
-      }));
-      return;
-    } else {
-      setErrors((prevErrors) => ({ ...prevErrors, email: "" }));
-    }
 
-    // Validar la contraseña
-    if (!passwordRegex.test(formData.password)) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        password:
-          "La contraseña debe tener al menos 8 caracteres, incluyendo una letra y un número.",
-      }));
-      return;
-    } else {
-      setErrors((prevErrors) => ({ ...prevErrors, password: "" }));
-    }
 
-    // Si todo está bien, enviar los datos
-    console.log("Formulario enviado:", formData);
-    alert("Inicio de sesión exitoso");
+
+  }
+  catch (error){
+    alert(`wrong credentials`)
+  }
+
+ 
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        {/* Campo de correo */}
-        <div>
-          <label htmlFor="email">Correo electrónico:</label>
+    <main className="login-container">
+      <div className="login">
+        <h1 className="login-title">Panel de Administrador</h1>
+        {/* <form className="login-form" onSubmit={LoginTest}>  */}
+        <form className="login-form" onSubmit={handleSubmit}> 
           <input
             type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
+            className="login-input"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
-          {errors.email && <p>{errors.email}</p>}
-        </div>
-
-        {/* Campo de contraseña */}
-        <div>
-          <label htmlFor="password">Contraseña:</label>
           <input
             type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
+            className="login-input"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
-          {errors.password && <p>{errors.password}</p>}
-        </div>
+          <button className="login-button" type="submit">
+            Iniciar sesión
+          </button>
+        </form>
+      </div>
 
-        {/* Botón de envío */}
-        <button type="submit">Iniciar sesión</button>
-      </form>
-    </div>
+    </main>
   );
+
 };
 
 export default Login;
