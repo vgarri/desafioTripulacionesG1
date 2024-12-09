@@ -37,7 +37,7 @@ const VisorGraficas = () => {
 
   return <>
  { pantallaGeneral ? <section>
-    <button onClick={handleVerGraficas}>Ver Gráficas</button>
+    <button onClick={handleVerGraficas}>Ver gráficas de uso del chatbot</button>
   </section>
   : ""}
   {verGraficas ? <section>
