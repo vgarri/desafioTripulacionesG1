@@ -1,0 +1,104 @@
+@import '../utils/variables';
+
+.chatbot-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 7vh;
+  padding: 2rem;
+  background: transparent;
+  text-align: center;
+
+  .chatbot-history {
+    width:100%;
+    max-width: 400px;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .chatbot-history-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .chat-message {
+      max-width: 70%;
+      padding: 1rem 1.5rem;
+      border-radius: 40px;
+      font-size: 1rem;
+      line-height: 1.5;
+      position: relative;
+
+      &.question {
+        align-self: flex-start;
+        background-color: lighten($primary-color, 25%);
+        color: $light;
+        box-shadow: $box-shadow;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: -10px;
+          border-width: 10px 10px 0 0;
+          border-style: solid;
+          border-color: lighten($primary-color, 25%)transparent transparent transparent;
+        }
+      }
+
+      &.answer {
+        align-self: flex-end;
+        background-color: $light;
+        color: $gris;
+        box-shadow: $box-shadow;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          right: -10px;
+          border-width: 10px 0 0 10px;
+          border-style: solid;
+          border-color: $light transparent transparent transparent;
+        }
+      }
+    }
+  }
+
+  h2.chatbot-question {
+    color: $light;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .chat-input {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    gap: 1rem;
+
+    input.chatbot-input {
+      flex: 1;
+      padding: 0.8rem;
+      border: 2px solid $gris;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    button.chatbot-submit {
+      background-color: $primary-color;
+      color: $light;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+}
