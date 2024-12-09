@@ -31,13 +31,13 @@ const GraficasUsoAplicacion = () => {
 
 
 
-//----------------------------> Piechart
+  //----------------------------> Piechart
   const dataporcentaje = [
     {
       name: "Profesionales", value: 150
     },
     {
-      name: "Usuarios", value : 1300
+      name: "Usuarios", value: 1300
     }
   ];
   const colores = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300']
@@ -133,44 +133,45 @@ const GraficasUsoAplicacion = () => {
 
   ];
 
-//------------------------------> Treemap
-const dataTreemap = [
-  {
-    name: 'Por un evento de la organización',
-    children: [
-      { name: 'U', size: 100 },
-      { name: 'P', size: 20 },
-    ]
-  },
-  {
-    name: 'Por familiares/amigos',
-    children: [
-      { name: 'U', size: 50 },
-      { name: 'P', size: 10 },
-    ]
-  },
-  {
-    name: 'Por noticias',
-    children: [
-      { name: 'U', size: 150 },
-      { name: 'P', size: 100 },
-    ]
-  },
-  {
-    name: 'Por redes sociales',
-    children: [
-      { name: 'U', size: 800 },
-      { name: 'P', size: 20 },
-    ]
-  },
-  {
-    name: 'Otros',
-    children: [
-      { name: 'U', size: 200 },
-      { name: 'P', size: 0 },
-    ]
-  }
-];
+  //------------------------------> Treemap
+  const dataTreemap = [
+    {
+      name: 'Por un evento de la organización',
+      children: [
+        { name: 'U', size: 100 },
+        { name: 'P', size: 20 },
+      ]
+    },
+    {
+      name: 'Por familiares/amigos',
+      children: [
+        { name: 'U', size: 50 },
+        { name: 'P', size: 10 },
+      ]
+    },
+    {
+      name: 'Por noticias',
+      children: [
+        { name: 'U', size: 150 },
+        { name: 'P', size: 100 },
+      ]
+    },
+    {
+      name: 'Por redes sociales',
+      children: [
+        { name: 'U', size: 800 },
+        { name: 'P', size: 20 },
+      ]
+    },
+    {
+      name: 'Otros',
+      children: [
+        { name: 'U', size: 200 },
+        { name: 'P', size: 0 },
+      ]
+    }
+  ];
+
 
 
 
@@ -178,96 +179,100 @@ const dataTreemap = [
 
   return <>
     <article>
-    <h3 className="tituloGraficas">Motivos de uso del chatbot según edad y tipo de usuario</h3>
-    <BarChart
+      <h3 className="tituloGraficas">Motivos de uso del chatbot según edad y tipo de usuario</h3>
+      <BarChart
 
 
-      width={500}
+        width={500}
 
-      height={300}
+        height={300}
 
-      data={data}
+        data={data}
 
-      margin={{
+        margin={{
 
-        top: 20,
+          top: 20,
 
-        right: 30,
+          right: 30,
 
-        left: 20,
+          left: 20,
 
-        bottom: 5,
+          bottom: 5,
 
-      }}
+        }}
 
-    >
+      >
 
-      <CartesianGrid strokeDasharray="3 3" />
+        <CartesianGrid strokeDasharray="3 3" />
 
-      <XAxis dataKey="name" />
+        <XAxis dataKey="name" />
 
-      <YAxis />
+        <YAxis />
 
-      <Tooltip />
+        <Tooltip />
 
-      <Legend />
+        <Legend />
 
-      <Bar dataKey="Usuario_apoyo_emocional" stackId="a" fill="#e2007e" />
+        <Bar dataKey="Usuario_apoyo_emocional" stackId="a" fill="#e2007e" />
 
-      <Bar dataKey="Usuario_divulgacion" stackId="a" fill="#44bac1" />
+        <Bar dataKey="Usuario_divulgacion" stackId="a" fill="#44bac1" />
 
-      <Bar dataKey="Profesional_apoyo_emocional" stackId="b" fill="#f45540" />
+        <Bar dataKey="Profesional_apoyo_emocional" stackId="b" fill="#f45540" />
 
-      <Bar dataKey="Profesional_divulgacion" stackId="b" fill="#9c4aa0" />
+        <Bar dataKey="Profesional_divulgacion" stackId="b" fill="#9c4aa0" />
 
-    </BarChart>
+      </BarChart>
     </article>
     <article>
-    <h3 className="tituloGraficas"> % de uso del chatbot por tipo de usuario</h3>
-    
-     
-    <PieChart width={730} height={250}>
-    
-      <Pie data={dataporcentaje} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} label={(entry) => `${entry.name}: ${entry.value}`}>
-      {dataporcentaje.map((entry, index) => (
+      <h3 className="tituloGraficas"> % de uso del chatbot por tipo de usuario</h3>
+
+
+      <PieChart width={730} height={250}>
+
+        <Pie data={dataporcentaje} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} label={(entry) => `${entry.name}: ${entry.value}`}>
+          {dataporcentaje.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={colores[index]} />
           ))}
-          </Pie>
-    </PieChart>
+        </Pie>
+      </PieChart>
     </article>
     <article>
       <h3>Por qué medio conocen FELGTBI+</h3>
-      <ResponsiveContainer>
-        <Treemap
-          data={dataTreemap}
-          dataKey="size"
-          ratio={4 / 3}
-          stroke="#fff"
-          fill="#8884D8"
-        >
-          {(nodes) =>
-            nodes.map((node, index) => (
-              <g key={`node-${index}`} transform={`translate(${node.x}, ${node.y})`}>
-                <rect
-                  width={node.width}
-                  height={node.height}
-                  fill={node.depth === 1 ? "#82CA9D" : "#FFC658"}
-                  stroke="#fff"
-                />
-                <text
-                  x={node.x + node.width / 2}
-                  y={node.y + node.height / 2}
-                  textAnchor="middle"
-                  fill="#000"
-                  fontSize={14}
-                >
-                  {node.data.name}
-                </text>
-              </g>
-            ))
-          }
-        </Treemap>
-      </ResponsiveContainer>
+      <div style={{ width: '100%', height: 400 }}>
+        <ResponsiveContainer>
+          <Treemap
+            data={dataTreemap}
+            dataKey="size"
+            ratio={4 / 3}
+            stroke="#fff"
+            fill="#8884D8"
+          >
+            {(nodes) =>
+              nodes.map((node, index) => (
+                <g key={`node-${index}`} transform={`translate(${node.x}, ${node.y})`}>
+                  <rect
+                    width={node.width}
+                    height={node.height}
+                    fill={node.depth === 1 ? "#82CA9D" : "#FFC658"}
+                    stroke="#fff"
+                  />
+                  <text
+                    x={node.x + node.width / 2}
+                    y={node.y + node.height / 2}
+                    textAnchor="middle"
+                    fill="#000"
+                    fontSize={14}
+                  >
+                    {node.data.name}
+                  </text>
+                </g>
+              ))
+            }
+          </Treemap>
+        </ResponsiveContainer>
+      </div>
+
+
     </article>
 
   </>
