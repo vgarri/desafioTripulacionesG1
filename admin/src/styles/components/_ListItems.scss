@@ -1,0 +1,114 @@
+@import '../utils/variables';
+
+.task-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: rgba($light, 0.7);
+  border: 1px solid $primary-color;
+  border-radius: 8px;
+  box-shadow: $box-shadow;
+
+  &.completed {
+    background-color: rgba($primary-color, 0.3); 
+    color: $secondary-color; 
+  
+    h3, p {
+      text-decoration: line-through; 
+      color: $primary-color; 
+    }
+  }
+
+  h3 {
+    font-family: $fuente;
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: $primary-color;
+    margin: 0;
+  }
+
+  p {
+    font-family: $fuente;
+    font-weight: 400;
+    font-size: 1rem;
+    margin: 0;
+    color: $secondary-color;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    button {
+      font-family: $fuente;
+      font-weight: 400;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      color: $primary-color; 
+      background-color: transparent; 
+      border: 2px solid $secondary-color; 
+      border-radius: 0px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: rgba($primary-color, 0.1); 
+        color: $primary-color; 
+        transform: scale(1.05);
+      }
+
+      &:focus {
+        outline: 2px solid map-get($complementary-colors, "yellow"); 
+      }
+
+      &:first-of-type {
+        color: $secondary-color; 
+        background-color: transparent;
+
+        &:hover {
+          background-color: $secondary-color;
+          color: $light; 
+        }
+      }
+
+      &:nth-of-type(2) { 
+        color: $secondary-color;
+        background-color: transparent;
+
+        &:hover {
+          background-color: $secondary-color;
+          color: $light;
+        }
+      }
+      
+      &:last-of-type {
+        color: $secondary-color; 
+        background-color: transparent;
+        
+        &:hover {
+          background-color: $secondary-color;
+          color: $light; 
+        }
+      }
+    }
+  }
+
+  @media (max-width: $mobile-breakpoint) {
+    .actions {
+      flex-direction: row; 
+      gap: 0.5rem; 
+      justify-content: center; 
+  
+      button {
+        font-size: 1rem; 
+        padding: 0.8rem 1.5rem; 
+        width: auto; 
+      }
+    }
+  }  
+}
