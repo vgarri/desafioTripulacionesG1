@@ -1,4 +1,5 @@
 import { useState } from "react";
+import '../../../styles/Styles.scss';
 
 const initialData = {
   edad: "",
@@ -62,35 +63,35 @@ function Chatbot() {
       key: "situacion_afectiva",
       question: "¿Cuál es tu situación afectiva?",
       validate: (value) => value.trim().length > 0,
-      errorMessage: "Por favor, especifica tu situación afectiva.",
+      errorMessage: "Por favor, ingresa tu situación afectiva.",
     },
     {
       key: "tiene_vih",
-      question: "¿Tienes vih? (Sí o No)",
+      question: "¿Tienes diagnóstico previo de vih?",
       validate: (value) => ["si", "no"].includes(value.toLowerCase()),
       errorMessage: "Por favor, responde con 'Si' o 'No'.",
     },
     {
       key: "fecha_diagnostico",
-      question: "¿Cuándo recibiste el diagnóstico?",
+      question: "¿Cuándo recibiste el diagnóstico de vih? ejemplo: entre 1 y 3 meses o mas de un año",
       options: ["Menos de un mes", "Entre 1 y 3 meses", "Entre 3 y 12 meses", "Más de un año"],
       validate: (value) => ["menos de un mes", "entre 1 y 3 meses", "entre 3 y 12 meses", "más de un año"].includes(value.toLowerCase()),
       errorMessage: "Por favor, selecciona una opción válida.",
-      conditional: (formData) => formData.tiene_vih.toLowerCase() === "si",
+      conditional: (formData) => formData.vih_usuario.toLowerCase() === "si",
     },
     {
       key: "fecha_inicio_tratamiento",
-      question: "¿Desde cuándo recibes tratamiento?",
+      question: "¿Desde cuándo recibes tratamiento para el vih? ejemplo: entre 1 y 3 meses o mas de un año",
       options: ["Menos de un mes", "Entre 1 y 3 meses", "Entre 3 y 12 meses", "Más de un año"],
       validate: (value) => ["menos de un mes", "entre 1 y 3 meses", "entre 3 y 12 meses", "más de un año"].includes(value.toLowerCase()),
       errorMessage: "Por favor, selecciona una opción válida.",
-      conditional: (formData) => formData.tiene_vih.toLowerCase() === "si",
+      conditional: (formData) => formData.vih_usuario.toLowerCase() === "sí",
     },
     {
       key: "hablado_con_alguien",
-      question: "¿Has hablado con alguien sobre esto? (Sí o No)",
+      question: "¿Has hablado con alguien sobre el VIH?",
       validate: (value) => ["si", "no"].includes(value.toLowerCase()),
-      errorMessage: "Por favor, responde con 'Si' o 'No'.",
+      errorMessage: "Por favor, responde con 'Sí' o 'No'.",
     },
     {
       key: "como_conocio_felgtbi",
@@ -102,31 +103,30 @@ function Chatbot() {
 
   const currentQuestion = steps[currentStep];
 
-  const handleConditionalSteps = (value) => {
+  const handleConditionalSkip = (value) => {
     if (currentQuestion.key === "tiene_vih") {
       if (value.toLowerCase() === "si") {
         setCurrentStep(steps.findIndex((step) => step.key === "fecha_diagnostico"));
       } else {
         setCurrentStep(steps.findIndex((step) => step.key === "como_conocio_felgtbi"));
       }
-      return true; // Indica que manejó el salto condicional
+      return true;
     }
     return false;
   };
 
-  const handleSubmitAnswer = () => {
+  const handleSubmit = async () => {
     if (currentQuestion.validate(inputValue)) {
-      const updatedValue = currentQuestion.key === "edad" ? Number(inputValue) : inputValue; // Convertir edad a número
+      const updatedValue = currentQuestion.key === "edad" ? Number(inputValue) : inputValue;
       setFormData({ ...formData, [currentQuestion.key]: updatedValue });
       setInputValue("");
       setError("");
 
-      if (!handleConditionalSteps(inputValue)) {
-        // Avanzar al siguiente paso o finalizar
+      if (!handleConditionalSkip(inputValue)) {
         if (currentStep < steps.length - 1) {
           setCurrentStep(currentStep + 1);
         } else {
-          setCurrentStep(steps.length); // Marcar el formulario como completo
+          setCurrentStep(steps.length);
         }
       }
     } else {
@@ -134,7 +134,7 @@ function Chatbot() {
     }
   };
 
-  const handleSubmitForm = async () => {
+  const sendForm = async () => {
     try {
       const response = await fetch("http://52.214.54.221:8000/respuesta-usuario", {
         method: "POST",
@@ -145,47 +145,43 @@ function Chatbot() {
       });
 
       if (!response.ok) {
-        throw new Error("Error al enviar los datos");
+        const errorData = await response.json();
+        throw new Error(`Error al enviar los datos: ${errorData.message || response.statusText}`);
       }
-      alert("Datos enviados correctamente");
+      console.log("Datos enviados correctamente:", formData);
     } catch (error) {
       console.error(error);
-      alert("Hubo un error al enviar los datos");
+      alert("Hubo un error al enviar los datos: " + error.message);
     }
   };
 
   return (
     <div>
-      {/* Renderizado del chat */}
       <div>
-        {/* Mostrar todas las preguntas y respuestas previas */}
         {steps.slice(0, currentStep).map((step, index) => (
           <div key={index}>
             <div>{step.question}</div>
             <div>{formData[step.key]}</div>
           </div>
         ))}
-
-        {/* Mostrar la pregunta actual */}
         {currentStep < steps.length ? (
           <div>
             <h2>{currentQuestion.question}</h2>
-            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <div>
               <input
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 autoFocus
               />
-              <button onClick={handleSubmitAnswer}>Enviar</button>
+              <button onClick={handleSubmit}>Enviar</button>
             </div>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p>{error}</p>}
           </div>
         ) : (
           <div>
             <h2>¡Formulario completo!</h2>
-            <pre>{JSON.stringify(formData, null, 2)}</pre>
-            <button onClick={handleSubmitForm}>Enviar respuestas</button>
+            <button onClick={sendForm}>Enviar respuestas</button>
           </div>
         )}
       </div>
