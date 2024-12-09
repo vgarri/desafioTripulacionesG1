@@ -2,8 +2,8 @@
 
 .footer {
   width: 100%;
-  background-color: rgba($secondary-color, 0.9);
-  color: $light;
+  background-color: rgba($secondary-color, 1);
+  color: $gris;
   text-align: center;
   padding: 1rem 0;
   font-size: 0.9rem;
@@ -31,12 +31,12 @@
     gap: 1rem;
 
     a {
-      color: $light;
+      color: $gris;
       font-size: 1.5rem;
       transition: color 0.3s ease;
 
       &:hover {
-        color: map-get($complementary-colors, "aqua");
+        color: $light;
       }
     }
   }
