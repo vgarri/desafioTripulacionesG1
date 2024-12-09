@@ -23,7 +23,7 @@ const Nav = ({ onLogout }) => {
         </li>
       </ul>
       <div className="nav-logout">
-        <button className="btn-link" onClick={onLogout}>Cerrar sesión</button>
+        <button className="btn-link" onClick={onLogout}><span className="logout-text">Cerrar sesión</span></button>
       </div>
     </nav>
   );
