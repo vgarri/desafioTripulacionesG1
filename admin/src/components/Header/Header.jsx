@@ -7,7 +7,7 @@ const Header = ({ isAuthenticated, onLogout }) => {
       <div className="header-content">
         <img 
           className="header-logo" 
-          src="https://felgtbi.org/wp-content/uploads/2021/10/logo_felgtbi_blanco.png" 
+          src="https://felgtbi.org/wp-content/uploads/2021/10/cropped-logo_felgtbi.png" 
           alt="Logo" 
         />
         {isAuthenticated && <Nav onLogout={onLogout} />}

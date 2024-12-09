@@ -5,6 +5,8 @@ import Footer from './components/Footer/Footer';
 import Login from './components/Main/Login/Login';
 import Graficas from './components/Main/Graficas/Graficas';
 import Edicion from './components/Main/Edicion/Edicion';
+import '@fortawesome/fontawesome-free/css/all.css';
+
 import './styles/styles.scss';
 
 function App() {

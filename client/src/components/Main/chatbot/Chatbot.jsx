@@ -21,12 +21,11 @@ function Chatbot() {
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
 
-  // Definir las preguntas y validaciones
   const steps = [
     {
       key: "edad",
       question: "¿Cuál es tu edad?",
-      validate: (value) => /^\d+$/.test(value) && value > 0,
+      validate: (value) => /^\d+$/.test(value) && Number(value) > 0,
       errorMessage: "Por favor, ingresa una edad válida (un número positivo).",
     },
     {
@@ -68,25 +67,29 @@ function Chatbot() {
     {
       key: "tiene_vih",
       question: "¿Tienes vih? (Sí o No)",
-      validate: (value) => ["sí", "no"].includes(value.toLowerCase()),
+      validate: (value) => ["si", "no"].includes(value.toLowerCase()),
       errorMessage: "Por favor, responde con 'Si' o 'No'.",
     },
     {
       key: "fecha_diagnostico",
-      question: "¿Cuál es la fecha de diagnóstico? (formato: YYYY-MM-DD)",
-      validate: (value) => /^\d{4}-\d{2}-\d{2}$/.test(value),
-      errorMessage: "Por favor, ingresa una fecha válida (formato: YYYY-MM-DD).",
+      question: "¿Cuándo recibiste el diagnóstico?",
+      options: ["Menos de un mes", "Entre 1 y 3 meses", "Entre 3 y 12 meses", "Más de un año"],
+      validate: (value) => ["menos de un mes", "entre 1 y 3 meses", "entre 3 y 12 meses", "más de un año"].includes(value.toLowerCase()),
+      errorMessage: "Por favor, selecciona una opción válida.",
+      conditional: (formData) => formData.tiene_vih.toLowerCase() === "si",
     },
     {
       key: "fecha_inicio_tratamiento",
-      question: "¿Cuál es la fecha de inicio de tratamiento? (formato: YYYY-MM-DD)",
-      validate: (value) => /^\d{4}-\d{2}-\d{2}$/.test(value),
-      errorMessage: "Por favor, ingresa una fecha válida (formato: YYYY-MM-DD).",
+      question: "¿Desde cuándo recibes tratamiento?",
+      options: ["Menos de un mes", "Entre 1 y 3 meses", "Entre 3 y 12 meses", "Más de un año"],
+      validate: (value) => ["menos de un mes", "entre 1 y 3 meses", "entre 3 y 12 meses", "más de un año"].includes(value.toLowerCase()),
+      errorMessage: "Por favor, selecciona una opción válida.",
+      conditional: (formData) => formData.tiene_vih.toLowerCase() === "si",
     },
     {
       key: "hablado_con_alguien",
       question: "¿Has hablado con alguien sobre esto? (Sí o No)",
-      validate: (value) => ["sí", "no"].includes(value.toLowerCase()),
+      validate: (value) => ["si", "no"].includes(value.toLowerCase()),
       errorMessage: "Por favor, responde con 'Si' o 'No'.",
     },
     {
@@ -113,13 +116,17 @@ function Chatbot() {
 
   const handleSubmitAnswer = () => {
     if (currentQuestion.validate(inputValue)) {
-      setFormData({ ...formData, [currentQuestion.key]: inputValue });
+      const updatedValue = currentQuestion.key === "edad" ? Number(inputValue) : inputValue; // Convertir edad a número
+      setFormData({ ...formData, [currentQuestion.key]: updatedValue });
       setInputValue("");
       setError("");
 
       if (!handleConditionalSteps(inputValue)) {
+        // Avanzar al siguiente paso o finalizar
         if (currentStep < steps.length - 1) {
           setCurrentStep(currentStep + 1);
+        } else {
+          setCurrentStep(steps.length); // Marcar el formulario como completo
         }
       }
     } else {
@@ -129,7 +136,7 @@ function Chatbot() {
 
   const handleSubmitForm = async () => {
     try {
-      const response = await fetch("http://18.203.245.199:8000/respuesta-usuario", {
+      const response = await fetch("http://52.214.54.221:8000/respuesta-usuario", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -149,27 +156,39 @@ function Chatbot() {
 
   return (
     <div>
-      {currentStep < steps.length ? (
-        <div>
-          <h2>{currentQuestion.question}</h2>
-          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-            <input
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              autoFocus
-            />
-            <button onClick={handleSubmitAnswer}>Enviar</button>
+      {/* Renderizado del chat */}
+      <div>
+        {/* Mostrar todas las preguntas y respuestas previas */}
+        {steps.slice(0, currentStep).map((step, index) => (
+          <div key={index}>
+            <div>{step.question}</div>
+            <div>{formData[step.key]}</div>
           </div>
-          {error && <p style={{ color: "red" }}>{error}</p>}
-        </div>
-      ) : (
-        <div>
-          <h2>¡Formulario completo!</h2>
-          <pre>{JSON.stringify(formData, null, 2)}</pre>
-          <button onClick={handleSubmitForm}>Enviar todo</button>
-        </div>
-      )}
+        ))}
+
+        {/* Mostrar la pregunta actual */}
+        {currentStep < steps.length ? (
+          <div>
+            <h2>{currentQuestion.question}</h2>
+            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+              <input
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                autoFocus
+              />
+              <button onClick={handleSubmitAnswer}>Enviar</button>
+            </div>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+          </div>
+        ) : (
+          <div>
+            <h2>¡Formulario completo!</h2>
+            <pre>{JSON.stringify(formData, null, 2)}</pre>
+            <button onClick={handleSubmitForm}>Enviar respuestas</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
