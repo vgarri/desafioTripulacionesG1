@@ -1,5 +1,4 @@
-
- @import '../utils/variables';
+@import '../utils/variables';
 
 * {
   margin: 0;
@@ -25,6 +24,26 @@ html, body, #root {
   background-repeat: no-repeat; 
   background-attachment: fixed; 
   background-position: center; 
+
+  // Estilo para pantallas tipo iPad
+  @media (max-width: $ipad-breakpoint) {
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 1), 
+        rgba(255, 255, 255, 0.7),
+        rgba(255, 255, 255, 0)
+      ), 
+      url('/fondo_vertical.png'); 
+  }
+
+  // Estilo para pantallas móviles más pequeñas
+  @media (max-width: $mobile-breakpoint) {
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 1), 
+        rgba(255, 255, 255, 0.7),
+        rgba(255, 255, 255, 0)
+      ), 
+      url('/fondo_vertical.png'); 
+  }
 }
 
 .app-container {
@@ -49,7 +68,14 @@ html, body, #root {
   align-items: center;
   justify-content: center;
 
+  // Estilo para pantallas tipo iPad
+  @media (max-width: $ipad-breakpoint) {
+    padding: 1.5rem; 
+  }
+
+  // Estilo para pantallas móviles más pequeñas
   @media (max-width: $mobile-breakpoint) {
     padding: 1rem; 
+    background-color: lighten($secondary-color, 10%); 
   }
 }

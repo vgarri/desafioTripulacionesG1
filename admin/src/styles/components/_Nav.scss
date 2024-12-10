@@ -7,6 +7,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
+  position: relative; /* Necesario para posicionar elementos hijos */
 
   @media (max-width: $mobile-breakpoint) {
     flex-direction: column;
@@ -63,12 +64,7 @@
     display: flex;
     justify-content: flex-end;
 
-    @media (max-width: $mobile-breakpoint) {
-      margin-top: 0.5rem;
-      justify-content: center;
-    }
-
-    /* Estilos del botón de cerrar sesión */
+    /* Botón de cerrar sesión */
     .btn-link {
       background-color: $primary-color; 
       color: $light; 
@@ -87,6 +83,34 @@
 
       &:focus {
         outline: 2px solid map-get($complementary-colors, "aqua");
+      }
+
+      /* pantallas pequeñas */
+      @media (max-width: $mobile-breakpoint) {
+        position: absolute;
+        top: -5rem;
+        right: -0.7rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: 0;
+        font-size: 1.5rem;
+        border-radius: 7%; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $primary-color;
+        color: $light;
+
+        /* Oculta el texto y muestra la "X" */
+        .logout-text {
+          display: none;
+        }
+
+        &::after {
+          content: "X";
+          font-size: 1.5rem;
+          color: $light;
+        }
       }
     }
   }

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect, useRef } from "react";
+import "../../../styles/components/_ChatbotSanitario.scss"; 
 
 const initialData = {
   municipio_residencia: "",
@@ -18,8 +18,10 @@ function ChatbotSanitario() {
   const [currentStep, setCurrentStep] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
+  const chatHistoryRef = useRef(null);
+  const lastMessageRef = useRef(null);
 
-  const steps = [
+const steps = [
     {
       key: "municipio_residencia",
       question: "¿En qué municipio resides?",
@@ -58,7 +60,7 @@ function ChatbotSanitario() {
       errorMessage: "Por favor, selecciona una opción válida.",
       conditional: (formData) => formData.vih_usuario.toLowerCase() === "si",
     },
-    {
+{
       key: "vih_tratamiento",
       question: "¿Desde cuándo recibes tratamiento para el vih? ejemplo: entre 1 y 3 meses o mas de un año",
       options: ["Menos de un mes", "Entre 1 y 3 meses", "Entre 3 y 12 meses", "Más de un año"],
@@ -79,8 +81,7 @@ function ChatbotSanitario() {
       errorMessage: "Por favor, ingresa cómo conociste la FELGTBI+.",
     },
   ];
-
-  const currentQuestion = steps[currentStep];
+const currentQuestion = steps[currentStep];
 
   const handleConditionalSkip = (value) => {
     if (currentQuestion.key === "vih_usuario") {
@@ -116,8 +117,7 @@ function ChatbotSanitario() {
       setError(currentQuestion.errorMessage);
     }
   };
-
-  const sendForm = async () => {
+const sendForm = async () => {
     const formDataToSend = {
       ...formData,
       vih_diagnostico: formData.vih_diagnostico || "No tengo",
@@ -152,36 +152,48 @@ function ChatbotSanitario() {
     }
   };
 
+  useEffect(() => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [currentStep]);
+
+
   return (
-    <div>
-      <div>
+    <div className="chatbot-container">
+      <div className="chatbot-history" ref={chatHistoryRef}>
         {steps.slice(0, currentStep).map((step, index) => (
-          <div key={index}>
-            <div>{step.question}</div>
-            <div>{formData[step.key]}</div>
+          <div key={index} className="chatbot-history-item" ref={index === currentStep - 1 ? lastMessageRef : null}>
+            <div className="chat-message question">{step.question}</div>
+            <div className="chat-message answer">{formData[step.key]}</div>
           </div>
         ))}
-        {currentStep < steps.length ? (
-          <div>
-            <h2>{currentQuestion.question}</h2>
-            <div>
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                autoFocus
-              />
-              <button onClick={handleSubmit}>Enviar</button>
-            </div>
-            {error && <p>{error}</p>}
-          </div>
-        ) : (
-          <div>
-            <h2>¡Formulario completo!</h2>
-            <button onClick={sendForm}>Enviar respuestas</button>
-          </div>
-        )}
       </div>
+
+      {currentStep < steps.length ? (
+        <div>
+          <h2 className="chatbot-question">{currentQuestion.question}</h2>
+          <div className="chat-input">
+            <input
+              type="text"
+              className="chatbot-input"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+              autoFocus
+            />
+            <button className="chatbot-submit" onClick={handleSubmit}>
+              Enviar
+            </button>
+          </div>
+          {error && <p className="error-message">{error}</p>}
+        </div>
+      ) : (
+        <div>
+          <h2 className="chatbot-complete-message">¡Formulario completo!</h2>
+          <button onClick={sendForm}>Enviar respuestas</button>
+        </div>
+      )}
     </div>
   );
 }
