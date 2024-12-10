@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "../../../styles/components/_ChatbotSanitario.scss"; 
 
 const initialData = {
+  id_sesion: "",
   municipio_residencia: "",
   ccaa: "", 
   ambito_laboral: "",
@@ -117,40 +118,58 @@ const currentQuestion = steps[currentStep];
       setError(currentQuestion.errorMessage);
     }
   };
-const sendForm = async () => {
-    const formDataToSend = {
+  const sendForm = async () => {
+    // Asigna un ID de sesión predeterminado si no existe.
+    const sessionId = formData.id_sesion || "sesion_predeterminada";
+    
+    // Asegúrate de incluir el ID de sesión en los datos finales.
+    const updatedFormData = {
       ...formData,
-      vih_diagnostico: formData.vih_diagnostico || "No tengo",
-      vih_tratamiento: formData.vih_tratamiento || "No tengo",
+      id_sesion: sessionId,
+      vih_diagnostico: formData.vih_diagnostico || "No tengo", // Valor predeterminado
+      vih_tratamiento: formData.vih_tratamiento || "No tengo", // Valor predeterminado
     };
-
-    console.log("Form Data to Send: ", formDataToSend);
-
-    const missingFields = Object.keys(formDataToSend).filter(key => !formDataToSend[key].trim() && key !== 'vih_tratamiento' && key !== 'vih_diagnostico');
+  
+    // Validación de campos faltantes
+    const missingFields = Object.keys(updatedFormData).filter(
+      (key) => key !== "vih_tratamiento" && key !== "vih_diagnostico" && !updatedFormData[key].trim()
+    );
+  
     if (missingFields.length > 0) {
       alert(`Faltan campos obligatorios: ${missingFields.join(", ")}`);
       return;
     }
-
+  
     try {
+      // Envía los datos a la API
       const response = await fetch("http://52.214.54.221:8000/respuesta-profesional", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formDataToSend),
+        body: JSON.stringify(updatedFormData),
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Detalles del error:", errorData);
+        alert("Error al enviar el formulario. Por favor, inténtalo de nuevo.");
+      } else {
+        console.log("Datos enviados correctamente:", updatedFormData);
+        alert("¡Formulario enviado exitosamente!");
       }
-      console.log("Datos enviados correctamente:", formDataToSend);
     } catch (error) {
-      console.error(error);
+      console.error("Error al enviar los datos:", error);
       alert("Hubo un error al enviar los datos: " + error.message);
     }
   };
+  
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      id_sesion: "sesion_" + Date.now(), 
+    }));
+  }, []);
 
   useEffect(() => {
     if (lastMessageRef.current) {
