@@ -1,0 +1,52 @@
+@import '../utils/variables';
+
+.header {
+  width: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+
+  .header-logo {
+    height: 100px;
+    width: auto;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+@media (max-width: $tablet-breakpoint) {
+  .header {
+    padding: 0.8rem 1.5rem;
+  }
+
+  .header-content {
+    .header-logo {
+      height: 50px;
+    }
+  }
+}
+
+@media (max-width: $mobile-breakpoint) {
+  .header {
+    padding: 0.5rem 1rem;
+  }
+
+  .header-content {
+    .header-logo {
+      height: 77px;
+    }
+  }
+}

@@ -1,0 +1,240 @@
+/* @import '../utils/variables';
+
+.chatbot-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: transparent;
+  text-align: center;
+
+  .chatbot-history {
+    width: 100%;
+    max-width: 400px;
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0; 
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $gris;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: lighten($gris, 40%);
+    }
+
+    .chatbot-history-item {
+      display: flex;
+      flex-direction: column;
+      margin: 0; 
+      padding: 0.8rem;
+      border: none; 
+      height: auto; 
+      min-height: 0; 
+    }
+
+    .chat-message {
+      max-width: 70%;
+      padding: 1rem 1.5rem;
+      border-radius: 40px;
+      font-size: 1rem;
+      line-height: normal; 
+      position: relative;
+      box-shadow: none; 
+
+      &.question {
+        align-self: flex-start;
+        background-color: lighten($primary-color, 25%);
+        color: $light;
+      }
+
+      &.answer {
+        align-self: flex-end;
+        background-color: $light;
+        color: $gris;
+      }
+    }
+  }
+
+  .chat-input {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    gap: 0.8rem;
+
+    input.chatbot-input {
+      flex: 1;
+      padding: 0.8rem;
+      border: 2px solid $gris;
+      border-radius: 10px;
+      outline: none;
+
+      &:focus {
+        border-color: $primary-color;
+        box-shadow: 0 0 8px rgba($primary-color, 0.5);
+      }
+    }
+
+    button.chatbot-submit {
+      background-color: $primary-color;
+      color: $light;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+}
+
+@media (max-width: $tablet-breakpoint) {
+  .chatbot-container {
+    padding: 1.5rem;
+  }
+
+  .chat-input {
+    flex-direction: column;
+
+    input.chatbot-input,
+    button.chatbot-submit {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: $mobile-breakpoint) {
+  .chatbot-container {
+    padding: 1rem;
+
+    .chat-input {
+      gap: 0.5rem;
+
+      input.chatbot-input,
+      button.chatbot-submit {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+      }
+    }
+  }
+}
+ */
+
+ @import '../utils/variables';
+
+.chatbot-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 50vh;
+  padding: 2rem;
+  background: transparent;
+  text-align: center;
+
+  .chatbot-history {
+    flex: 1;
+    width: 100%;
+    max-width: 600px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $gris;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: lighten($gris, 40%);
+    }
+
+    .chatbot-history-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .chat-message {
+      max-width: 70%;
+      padding: 1rem 1.5rem;
+      border-radius: 20px;
+      font-size: 1rem;
+      line-height: 1.5;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+      &.question {
+        align-self: flex-start;
+        background-color: lighten($primary-color, 25%);
+        color: $light;
+      }
+
+      &.answer {
+        align-self: flex-end;
+        background-color: $light;
+        color: $gris;
+      }
+    }
+  }
+
+  .chat-input {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1rem;
+
+    input.chatbot-input {
+      flex: 1;
+      padding: 0.8rem;
+      border: 2px solid $gris;
+      border-radius: 10px;
+      outline: none;
+
+      &:focus {
+        border-color: $primary-color;
+        box-shadow: 0 0 8px rgba($primary-color, 0.5);
+      }
+    }
+
+    button.chatbot-submit {
+      background-color: $primary-color;
+      color: $light;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+
+  .error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+}
