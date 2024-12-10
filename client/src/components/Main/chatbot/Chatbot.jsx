@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import "../../../styles/Styles.scss";
 
 const initialData = {
+  id_sesion: "",
   edad: "",
   pais_origen: "",
   ccaa: "",
@@ -136,7 +137,7 @@ function Chatbot() {
         if (currentStep < steps.length - 1) {
           setCurrentStep(currentStep + 1);
         } else {
-          setFormSent(true); // Marcar el formulario como enviado
+          setFormSent(true); 
         }
       }
     } else {
@@ -145,13 +146,17 @@ function Chatbot() {
   };
 
   const sendForm = async () => {
+    const sessionId = formData.id_sesion || "sesion_predeterminada"; // Ajusta esto según sea necesario
+    const updatedFormData = { ...formData, id_sesion: sessionId };
+
+
     try {
       const response = await fetch("http://52.214.54.221:8000/respuesta-usuario", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updatedFormData),
       });
 
       if (!response.ok) {
@@ -172,6 +177,14 @@ function Chatbot() {
       lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [currentStep]);
+
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      id_sesion: "sesion_" + Date.now(),
+    }));
+  }, []);
+  
 
 
  /*  useEffect(() => {
