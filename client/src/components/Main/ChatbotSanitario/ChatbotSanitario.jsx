@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect, useRef } from "react";
+import "../../../styles/components/_ChatbotSanitario.scss"; 
 
 const initialData = {
+  id_sesion: "",
   municipio_residencia: "",
   ccaa: "", 
   ambito_laboral: "",
@@ -18,8 +19,10 @@ function ChatbotSanitario() {
   const [currentStep, setCurrentStep] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
+  const chatHistoryRef = useRef(null);
+  const lastMessageRef = useRef(null);
 
-  const steps = [
+const steps = [
     {
       key: "municipio_residencia",
       question: "¿En qué municipio resides?",
@@ -58,7 +61,7 @@ function ChatbotSanitario() {
       errorMessage: "Por favor, selecciona una opción válida.",
       conditional: (formData) => formData.vih_usuario.toLowerCase() === "si",
     },
-    {
+{
       key: "vih_tratamiento",
       question: "¿Desde cuándo recibes tratamiento para el vih? ejemplo: entre 1 y 3 meses o mas de un año",
       options: ["Menos de un mes", "Entre 1 y 3 meses", "Entre 3 y 12 meses", "Más de un año"],
@@ -79,8 +82,7 @@ function ChatbotSanitario() {
       errorMessage: "Por favor, ingresa cómo conociste la FELGTBI+.",
     },
   ];
-
-  const currentQuestion = steps[currentStep];
+const currentQuestion = steps[currentStep];
 
   const handleConditionalSkip = (value) => {
     if (currentQuestion.key === "vih_usuario") {
@@ -116,72 +118,97 @@ function ChatbotSanitario() {
       setError(currentQuestion.errorMessage);
     }
   };
-
   const sendForm = async () => {
-    const formDataToSend = {
+    const sessionId = formData.id_sesion || "sesion_predeterminada";
+    
+    const updatedFormData = {
       ...formData,
-      vih_diagnostico: formData.vih_diagnostico || "No tengo",
-      vih_tratamiento: formData.vih_tratamiento || "No tengo",
+      id_sesion: sessionId,
+      vih_diagnostico: formData.vih_diagnostico || "No tengo", // Valor predeterminado
+      vih_tratamiento: formData.vih_tratamiento || "No tengo", // Valor predeterminado
     };
-
-    console.log("Form Data to Send: ", formDataToSend);
-
-    const missingFields = Object.keys(formDataToSend).filter(key => !formDataToSend[key].trim() && key !== 'vih_tratamiento' && key !== 'vih_diagnostico');
+  
+    const missingFields = Object.keys(updatedFormData).filter(
+      (key) => key !== "vih_tratamiento" && key !== "vih_diagnostico" && !updatedFormData[key].trim()
+    );
+  
     if (missingFields.length > 0) {
       alert(`Faltan campos obligatorios: ${missingFields.join(", ")}`);
       return;
     }
-
+  
     try {
       const response = await fetch("http://52.214.54.221:8000/respuesta-profesional", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formDataToSend),
+        body: JSON.stringify(updatedFormData),
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Detalles del error:", errorData);
+        alert("Error al enviar el formulario. Por favor, inténtalo de nuevo.");
+      } else {
+        console.log("Datos enviados correctamente:", updatedFormData);
+        alert("¡Formulario enviado exitosamente!");
       }
-      console.log("Datos enviados correctamente:", formDataToSend);
     } catch (error) {
-      console.error(error);
+      console.error("Error al enviar los datos:", error);
       alert("Hubo un error al enviar los datos: " + error.message);
     }
   };
+  
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      id_sesion: "sesion_" + Date.now(), 
+    }));
+  }, []);
+
+  useEffect(() => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [currentStep]);
+
 
   return (
-    <div>
-      <div>
+    <div className="chatbot-container">
+      <div className="chatbot-history" ref={chatHistoryRef}>
         {steps.slice(0, currentStep).map((step, index) => (
-          <div key={index}>
-            <div>{step.question}</div>
-            <div>{formData[step.key]}</div>
+          <div key={index} className="chatbot-history-item" ref={index === currentStep - 1 ? lastMessageRef : null}>
+            <div className="chat-message question">{step.question}</div>
+            <div className="chat-message answer">{formData[step.key]}</div>
           </div>
         ))}
-        {currentStep < steps.length ? (
-          <div>
-            <h2>{currentQuestion.question}</h2>
-            <div>
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                autoFocus
-              />
-              <button onClick={handleSubmit}>Enviar</button>
-            </div>
-            {error && <p>{error}</p>}
-          </div>
-        ) : (
-          <div>
-            <h2>¡Formulario completo!</h2>
-            <button onClick={sendForm}>Enviar respuestas</button>
-          </div>
-        )}
       </div>
+
+      {currentStep < steps.length ? (
+        <div>
+          <h2 className="chatbot-question">{currentQuestion.question}</h2>
+          <div className="chat-input">
+            <input
+              type="text"
+              className="chatbot-input"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+              autoFocus
+            />
+            <button className="chatbot-submit" onClick={handleSubmit}>
+              Enviar
+            </button>
+          </div>
+          {error && <p className="error-message">{error}</p>}
+        </div>
+      ) : (
+        <div>
+          <h2 className="chatbot-complete-message">¡Formulario completo!</h2>
+          <button onClick={sendForm}>Enviar respuestas</button>
+        </div>
+      )}
     </div>
   );
 }
