@@ -1,0 +1,73 @@
+@import '../utils/variables';
+
+.graficas-uso-aplicacion {
+  position: relative; // Necesario para posicionar el botón de forma absoluta dentro de este contenedor
+  display: flex;
+  flex-direction: column; // Predeterminado: columnas
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+
+  article {
+    background-color: $light; // Fondo blanco
+    box-shadow: $box-shadow; // Sombra
+    border-radius: 10px; // Bordes redondeados
+    padding: 1rem;
+    width: 100%;
+    max-width: 800px; // Máximo ancho por gráfica
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; // Asegura que el contenido esté equilibrado
+    height: 400px; // Altura uniforme para todas las tarjetas
+
+    h3 {
+      font-family: $fuente;
+      font-size: 1.5rem;
+      color: $primary-color;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .recharts-wrapper {
+      width: 100%;
+      height: 100%; // Ajusta la altura al contenedor padre
+      max-width: 400px; 
+      margin: 0 auto;
+    }
+  }
+
+  @media (min-width: $tablet-breakpoint) {
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    article {
+      flex: 1;
+      max-width: 50%;
+      margin: 0.5rem;
+      height: 500px; // Ajusta la altura para pantallas grandes
+
+      .recharts-wrapper {
+        max-width: 100%; // Ocupa el ancho permitido por el contenedor
+      }
+    }
+  }
+
+  @media (max-width: $mobile-breakpoint) {
+    gap: 1rem;
+    padding: 1rem;
+
+    
+    article {
+      padding: 0.5rem;
+      height: auto; // Altura automática para optimización en móviles
+
+      h3 {
+        font-size: 1rem;
+      }
+
+      .recharts-wrapper {
+        max-width: 300px; // Tamaño reducido para móviles
+      }
+    }
+  }
+}

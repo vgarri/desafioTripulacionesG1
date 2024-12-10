@@ -42,40 +42,29 @@ const VisorGraficas = () => {
 
 
   return (
-    <>
-      {pantallaGeneral ? (
+    <div className="visor-graficas">
+      {pantallaGeneral && (
         <section>
           <button onClick={handleVerGraficas}>Ver gráficas de uso del chatbot</button>
-          <button onClick={handleIrAGraficasUsuarios}>
-            Ir a Graficas Usuarios
-          </button>
+          <button onClick={handleIrAGraficasUsuarios}>Ir a Gráficas Usuarios</button>
         </section>
-      ) : (
-        ""
       )}
-      {verGraficas ? (
+  
+      {verGraficas && (
         <section>
           <article>
-            {verEstadisticasUso ? (
-              <button onClick={handleEstadisticasUso}>
-                Estadísticas de uso
-              </button>
-            ) : (
-              ""
+            {verEstadisticasUso && (
+              <button onClick={handleEstadisticasUso}>Estadísticas de uso</button>
             )}
-            {!atras ? <button onClick={handleAtras}>Atrás</button> : ""}
+            {!atras && <button onClick={handleAtras}>Atrás</button>}
           </article>
-          {!atras ? (
+          {!atras && (
             <article>{renderGraficasUsoAplicacion()}</article>
-          ) : (
-            ""
           )}
         </section>
-      ) : (
-        ""
       )}
-    </>
-  );
+    </div>
+  );  
 
 };
 

@@ -1,0 +1,58 @@
+@import '../utils/variables';
+
+.visor-graficas {
+  padding: 2rem;
+  background-color: transparent;
+  font-family: $fuente;
+
+  section {
+    margin-bottom: 2rem;
+    background: transparent;
+    padding: 0rem;
+  
+    display: flex;
+    flex-direction: column; // Apila los elementos verticalmente
+    align-items: center;    // Centra horizontalmente los hijos
+    gap: 1rem;              // Añade espacio entre los elementos
+  
+    button {
+      background: $secondary-color;
+      color: $light;
+      font-size: 1rem;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+  
+      &:hover {
+        background: lighten($primary-color, 10%);
+      }
+  
+      &:disabled {
+        background: darken($gris, 15%);
+        cursor: not-allowed;
+      }
+  
+}
+
+    // Botones centrados en pantallas pequeñas
+    @media (max-width: $mobile-breakpoint) {
+      button {
+        transform: none; // Restaura la posición
+        display: block; // Botón en bloque
+        margin: 0.5rem auto; // Centrado horizontalmente
+      }
+    }
+
+    article {
+      margin-top: 2rem; // Espaciado suficiente después del botón
+
+      h2 {
+        color: $secondary-color;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
