@@ -137,7 +137,7 @@ function Chatbot() {
         if (currentStep < steps.length - 1) {
           setCurrentStep(currentStep + 1);
         } else {
-          setFormSent(true); // Marcar el formulario como enviado
+          setFormSent(true); 
         }
       }
     } else {

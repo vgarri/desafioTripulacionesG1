@@ -119,10 +119,8 @@ const currentQuestion = steps[currentStep];
     }
   };
   const sendForm = async () => {
-    // Asigna un ID de sesión predeterminado si no existe.
     const sessionId = formData.id_sesion || "sesion_predeterminada";
     
-    // Asegúrate de incluir el ID de sesión en los datos finales.
     const updatedFormData = {
       ...formData,
       id_sesion: sessionId,
@@ -130,7 +128,6 @@ const currentQuestion = steps[currentStep];
       vih_tratamiento: formData.vih_tratamiento || "No tengo", // Valor predeterminado
     };
   
-    // Validación de campos faltantes
     const missingFields = Object.keys(updatedFormData).filter(
       (key) => key !== "vih_tratamiento" && key !== "vih_diagnostico" && !updatedFormData[key].trim()
     );
@@ -141,7 +138,6 @@ const currentQuestion = steps[currentStep];
     }
   
     try {
-      // Envía los datos a la API
       const response = await fetch("http://52.214.54.221:8000/respuesta-profesional", {
         method: "POST",
         headers: {
