@@ -24,7 +24,7 @@ function Chatbot() {
   const [error, setError] = useState("");
   const [formSent, setFormSent] = useState(false);
   const chatHistoryRef = useRef(null);
-  const lastMessageRef = useRef(null); 
+  const lastMessageRef = useRef(null);
 
 
 
@@ -100,10 +100,15 @@ function Chatbot() {
       conditional: (formData) => formData.tiene_vih.toLowerCase() === "si",
     },
     {
-      key: "hablado_con_alguien",
-      question: "¿Has hablado con alguien sobre el VIH?",
-      validate: (value) => ["si", "no"].includes(value.toLowerCase()),
-      errorMessage: "Por favor, responde con 'Sí' o 'No'.",
+      key: "fecha_inicio_tratamiento",
+      question: "¿Desde cuándo recibes tratamiento para el VIH?",
+      options: ["Menos de un mes", "Entre 1 y 3 meses", "Entre 3 y 12 meses", "Más de un año"],
+      validate: (value) =>
+        ["menos de un mes", "entre 1 y 3 meses", "entre 3 y 12 meses", "más de un año"].includes(
+          value.toLowerCase()
+        ),
+      errorMessage: "Por favor, selecciona una opción válida.",
+      conditional: (formData) => formData.tiene_vih.toLowerCase() === "si",
     },
     {
       key: "como_conocio_felgtbi",
@@ -118,7 +123,6 @@ function Chatbot() {
   const handleConditionalSkip = (value) => {
     if (currentQuestion.key === "tiene_vih") {
       if (value.toLowerCase() === "no") {
-        alert("Saltaré preguntas relacionadas con el VIH según tu respuesta.");
         setCurrentStep(steps.findIndex((step) => step.key === "como_conocio_felgtbi"));
         return true;
       }
@@ -137,7 +141,7 @@ function Chatbot() {
         if (currentStep < steps.length - 1) {
           setCurrentStep(currentStep + 1);
         } else {
-          setFormSent(true); 
+          setFormSent(true);
         }
       }
     } else {
@@ -184,15 +188,15 @@ function Chatbot() {
       id_sesion: "sesion_" + Date.now(),
     }));
   }, []);
-  
 
 
- /*  useEffect(() => {
-    if (chatHistoryRef.current) {
-      chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
-    }
-  }, [currentStep]);
- */
+
+  /*  useEffect(() => {
+     if (chatHistoryRef.current) {
+       chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
+     }
+   }, [currentStep]);
+  */
   return (
     <div className="chatbot-container">
       {formSent ? (
@@ -206,11 +210,12 @@ function Chatbot() {
         <>
           <div className="chatbot-history" ref={chatHistoryRef}>
             {steps.slice(0, currentStep).map((step, index) => (
-              <div key={index} className="chatbot-history-item"  ref={index === currentStep - 1 ? lastMessageRef : null}
-              >
-                <div className="chat-message question">{step.question}</div>
-                <div className="chat-message answer">{formData[step.key]}</div>
-              </div>
+              step.conditional && !step.conditional(formData) ? null : ( 
+                <div key={index} className="chatbot-history-item" ref={index === currentStep - 1 ? lastMessageRef : null}>
+                  <div className="chat-message question">{step.question}</div>
+                  <div className="chat-message answer">{formData[step.key]}</div>
+                </div>
+              )
             ))}
           </div>
 
