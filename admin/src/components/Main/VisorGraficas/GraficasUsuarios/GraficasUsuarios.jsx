@@ -148,11 +148,14 @@ const GraficasUsuarios = () => {
   };
 
 
+
   const filteredData = dataCommunities.filter((community) => community.name === selectedCommunity);
 
   return (
     <div>
       <button onClick={()=> navigate('/graficas')}>Atrás</button>
+      {/* Gráficas existentes */}
+
       <h3>Personas con/sin vih - Orientación Sexual</h3>
       <ResponsiveContainer width="100%" height={500}>
         <BarChart
