@@ -65,40 +65,88 @@ const dataRadar = [
   { subject: 'Asexuales', A: 40, B: 12, C: 8 },
 ];
 
-// Datos para las comunidades autónomas
 const dataCommunities = [
-  { name: 'Andalucía', Enero: 300, Febrero: 280, Marzo: 350, Abril: 320, Mayo: 300, Junio: 290, Julio: 330, Agosto: 310, Septiembre: 350, Octubre: 340, Noviembre: 310, Diciembre: 300 },
-  { name: 'Aragón', Enero: 150, Febrero: 180, Marzo: 170, Abril: 160, Mayo: 155, Junio: 165, Julio: 160, Agosto: 155, Septiembre: 170, Octubre: 165, Noviembre: 150, Diciembre: 140 },
-  { name: 'Islas Baleares', Enero: 200, Febrero: 190, Marzo: 210, Abril: 180, Mayo: 220, Junio: 210, Julio: 230, Agosto: 220, Septiembre: 240, Octubre: 230, Noviembre: 200, Diciembre: 190 },
-  { name: 'Canarias', Enero: 120, Febrero: 140, Marzo: 130, Abril: 135, Mayo: 125, Junio: 150, Julio: 145, Agosto: 140, Septiembre: 160, Octubre: 155, Noviembre: 145, Diciembre: 135 },
-  { name: 'Cantabria', Enero: 170, Febrero: 160, Marzo: 150, Abril: 165, Mayo: 180, Junio: 170, Julio: 160, Agosto: 155, Septiembre: 150, Octubre: 155, Noviembre: 160, Diciembre: 170 },
-  { name: 'Castilla-La Mancha', Enero: 130, Febrero: 120, Marzo: 140, Abril: 135, Mayo: 150, Junio: 160, Julio: 170, Agosto: 165, Septiembre: 180, Octubre: 175, Noviembre: 150, Diciembre: 140 },
-  { name: 'Castilla y León', Enero: 210, Febrero: 190, Marzo: 200, Abril: 205, Mayo: 210, Junio: 220, Julio: 215, Agosto: 210, Septiembre: 230, Octubre: 225, Noviembre: 220, Diciembre: 210 },
-  { name: 'Cataluña', Enero: 300, Febrero: 310, Marzo: 320, Abril: 330, Mayo: 340, Junio: 350, Julio: 360, Agosto: 350, Septiembre: 340, Octubre: 330, Noviembre: 320, Diciembre: 310 },
-  { name: 'Comunidad de Madrid', Enero: 450, Febrero: 460, Marzo: 470, Abril: 480, Mayo: 490, Junio: 500, Julio: 510, Agosto: 500, Septiembre: 490, Octubre: 480, Noviembre: 470, Diciembre: 460 },
+  {
+    name: 'Andalucía',
+    Enero: 0,
+    Febrero: 280,
+    Marzo: 10,
+    Abril: 320,
+    Mayo: 20,
+    Junio: 290,
+    Julio: 330,
+    Agosto: 310,
+    Septiembre: 35,
+    Octubre: 340,
+    Noviembre: 31,
+    Diciembre: 300,
+  },
+  {
+    name: 'Aragón',
+    Enero: 150,
+    Febrero: 180,
+    Marzo: 170,
+    Abril: 160,
+    Mayo: 155,
+    Junio: 165,
+    Julio: 160,
+    Agosto: 155,
+    Septiembre: 170,
+    Octubre: 165,
+    Noviembre: 150,
+    Diciembre: 140,
+  },
+  {
+    name: 'Cataluña',
+    Enero: 300,
+    Febrero: 310,
+    Marzo: 320,
+    Abril: 330,
+    Mayo: 340,
+    Junio: 350,
+    Julio: 360,
+    Agosto: 350,
+    Septiembre: 340,
+    Octubre: 330,
+    Noviembre: 320,
+    Diciembre: 310,
+  },
 ];
 
-// Colores para las comunidades autónomas
-const communityColors = {
-  'Andalucía': '#FFEB3B',
-  'Aragón': '#F50057',
-  'Islas Baleares': '#FF9800',
-  'Canarias': '#2196F3',
-  'Cantabria': '#9C27B0',
-  'Castilla-La Mancha': '#C2185B',
-  'Castilla y León': '#3F51B5',
-  'Cataluña': '#4CAF50',
-  'Comunidad de Madrid': '#FF5722',
-};
+// Lista de meses
+const months = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre',
+];
 
 const GraficasUsuarios = () => {
   const navigate = useNavigate();
   const [atras, setAtras] = useState("");
   const [selectedCommunity, setSelectedCommunity] = useState('Andalucía');
 
+  const filteredCommunity = dataCommunities.find(
+    (community) => community.name === selectedCommunity
+  );
+
+  const formattedData = months.map((month) => ({
+    month,
+    value: filteredCommunity[month],
+  }));
+
   const handleCommunityChange = (event) => {
     setSelectedCommunity(event.target.value);
   };
+
 
 
   const filteredData = dataCommunities.filter((community) => community.name === selectedCommunity);
@@ -107,6 +155,7 @@ const GraficasUsuarios = () => {
     <div>
       <button onClick={()=> navigate('/graficas')}>Atrás</button>
       {/* Gráficas existentes */}
+
       <h3>Personas con/sin vih - Orientación Sexual</h3>
       <ResponsiveContainer width="100%" height={500}>
         <BarChart
@@ -125,10 +174,10 @@ const GraficasUsuarios = () => {
       </ResponsiveContainer>
 
       <h3>Personas con/sin vih - Identidad de Género</h3>
-      <ResponsiveContainer width="100%" height={500}>
+      <ResponsiveContainer width={700} height={500}>
         <BarChart
           data={data2}
-          margin={{ top: 30, right: 30, left: 20, bottom: 70 }}
+          margin={{ top: 30, right: 30, left: 20, bottom: 100 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" angle={-45} textAnchor="end" />
@@ -141,13 +190,15 @@ const GraficasUsuarios = () => {
         </BarChart>
       </ResponsiveContainer>
 
-      <h3>Radar Chart</h3>
+      <h3>Usuarios con vih - Situación afectiva</h3>
       <ResponsiveContainer width="100%" height={500}>
         <RadarChart outerRadius="90%" data={dataRadar}>
           <PolarGrid />
           <PolarAngleAxis dataKey="subject" />
           <PolarRadiusAxis angle={30} domain={[0, 400]} />
-          <Radar name="Total" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+          <Radar name="Total A" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+          <Radar name="Total B" dataKey="B" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.6} />
+          <Radar name="Total C" dataKey="C" stroke="#ff7300" fill="#ff7300" fillOpacity={0.6} />
         </RadarChart>
       </ResponsiveContainer>
 
@@ -166,18 +217,23 @@ const GraficasUsuarios = () => {
         </Select>
       </FormControl>
 
-      {/* Gráfico de Comunidades Autónomas */}
-      <h3>Comunidad Autónoma: {selectedCommunity}</h3>
-      <ResponsiveContainer width="100%" height={500}>
-        <LineChart data={filteredData} margin={{ top: 20, right: 20, left: 20, bottom: 60 }}>
+      <h3>Persona con vih y sin tratamiento</h3>
+      <ResponsiveContainer width={600} height={500}>
+        <LineChart data={formattedData} margin={{ top: 20, right: 20, left: 20, bottom: 80 }}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey="month"
+            angle={-45}
+            textAnchor='end'
+            dy={10} />
           <YAxis />
           <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="Enero" stroke={communityColors[selectedCommunity]} />
-          <Line type="monotone" dataKey="Febrero" stroke={communityColors[selectedCommunity]} />
-          <Line type="monotone" dataKey="Marzo" stroke={communityColors[selectedCommunity]} />
+          <Legend verticalAlign="top" height={50} />
+          <Line
+            type="monotone"
+            dataKey="value"
+            stroke="#8884d8"
+            name={selectedCommunity}
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>
