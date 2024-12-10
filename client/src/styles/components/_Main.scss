@@ -1,0 +1,146 @@
+@import '../utils/variables';
+
+// Reset básico
+* {
+  margin: 0;
+  padding: 0;
+  font-family: $fuente;
+  box-sizing: border-box;
+}
+
+// Configuración de fondo global
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: $fuente; 
+  overflow-x: hidden; 
+  background-image: url('/fondo.png'); 
+  background-size: cover; 
+  background-repeat: no-repeat; 
+  background-attachment: fixed; 
+  background-position: center; 
+
+  // Fondo para tablets
+  @media (max-width: $ipad-breakpoint) {
+    background-image: url('/fondo_vertical.png'); 
+  }
+
+  // Fondo para móviles
+  @media (max-width: $mobile-breakpoint) {
+    background-image: url('/fondo_vertical.png'); 
+  }
+}
+
+// Contenedor principal del App
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+}
+
+// Contenedor principal del Main
+.main-content {
+  flex: 1; 
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.main-container {
+  min-height: calc(100vh - 100px); 
+  padding: 2rem;
+  background-color: $secondary-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: $ipad-breakpoint) {
+    padding: 1.5rem; 
+  }
+
+  @media (max-width: $mobile-breakpoint) {
+    padding: 1rem; 
+    background-color: lighten($secondary-color, 10%); 
+  }
+}
+
+// Contenedor para la selección inicial
+.main-selection-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 30vh;
+  gap: 2rem;
+  padding: 2rem;
+
+  p {
+    font-size: 2rem;
+    color: $light;
+    text-shadow: 2px 2px 4px rgba($black, 0.5);
+    margin-bottom: 2rem;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 2rem;
+
+    button {
+      background-color: $primary-color;
+      color: $light;
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: $box-shadow;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+        transform: scale(1.1);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+}
+
+// Estilos Responsivos
+@media (max-width: $tablet-breakpoint) {
+  .main-selection-container {
+    padding: 1.5rem;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 1.5rem;
+
+    button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: $mobile-breakpoint) {
+  .main-selection-container {
+    padding: 1rem;
+  }
+
+  .button-group {
+    gap: 1rem;
+
+    button {
+      font-size: 1rem;
+      padding: 0.8rem 1.5rem;
+    }
+  }
+}
