@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Chatbot from "./chatbot/Chatbot";
 import ChatbotSanitario from "./ChatbotSanitario/ChatbotSanitario";
+import ChatbotLLM from "./ChatbotLLM/ChatbotLLM";
 
 const Main = () => {
   const [isProfesional, setIsProfesional] = useState(null);
@@ -25,6 +26,7 @@ const Main = () => {
       )}
     </div>
   );
+
 };
 
 export default Main;

@@ -62,6 +62,8 @@ function App() {
               path="/edicion"
               element={isAuthenticated ? <Edicion /> : <Navigate to="/" />}
             />
+             
+
           </Routes>
         </main>
         <Footer />
