@@ -6,52 +6,118 @@
   font-family: $fuente;
 
   section {
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
     background: transparent;
     padding: 0rem;
-  
+
     display: flex;
-    flex-direction: column; // Apila los elementos verticalmente
-    align-items: center;    // Centra horizontalmente los hijos
-    gap: 1rem;              // Añade espacio entre los elementos
-  
-    button {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+
+    .botones-iniciales {
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+
+      button {
+        background: $light;
+        color: $primary-color;
+        font-size: 1.7rem;
+        font-weight: 300;
+        padding: 1.2rem;
+        border: none;
+        border-radius: 12px;
+        box-shadow: $box-shadow;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+        text-align: center;
+        width: 400px;
+        height: auto;
+
+        &:hover {
+          transform: scale(1.05);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        &:disabled {
+          background: darken($gris, 15%);
+          cursor: not-allowed;
+        }
+
+        .imagen-boton {
+          width: 250px;   
+          height: 250px;
+          object-fit: cover;
+          border-radius:250px;
+          margin-bottom: 0.8rem;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+          &:hover {
+            transform: scale(1.07); 
+          }
+        }
+      }
+    }
+
+    // Estilos para el botón "Atrás"
+    .boton-atras, article button {
       background: $secondary-color;
       color: $light;
-      font-size: 1rem;
+      font-size: 1.5rem;
       padding: 0.8rem 1.5rem;
       border: none;
-      border-radius: 0;
+      border-radius: 0px;
       cursor: pointer;
       transition: all 0.3s ease;
-  
+      text-align: center;
+      margin-top: 0.5rem;
+
       &:hover {
         background: lighten($primary-color, 10%);
       }
-  
+
       &:disabled {
         background: darken($gris, 15%);
         cursor: not-allowed;
       }
-  
-}
+    }
 
-    // Botones centrados en pantallas pequeñas
+    // pantallas pequeñas
     @media (max-width: $mobile-breakpoint) {
-      button {
-        transform: none; // Restaura la posición
-        display: block; // Botón en bloque
-        margin: 0.5rem auto; // Centrado horizontalmente
+      .botones-iniciales {
+        flex-direction: column;
+        gap: 1.5rem;
+
+        button {
+          width: 100%;
+          height: auto;
+
+          .imagen-boton {
+            width: 120px;   
+            height: 120px;
+          }
+        }
+      }
+
+      .boton-atras, article button {
+        width: auto;
+        padding: 0.7rem 1.2rem;
+        font-size: 1.2rem;
       }
     }
 
     article {
-      margin-top: 2rem; // Espaciado suficiente después del botón
+      margin-top: 1.5rem;
 
       h2 {
         color: $secondary-color;
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
       }
     }
   }

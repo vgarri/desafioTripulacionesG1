@@ -1,181 +1,109 @@
 import React from "react";
-
 import {
-  BarChart,
-  Bar,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
+  ResponsiveContainer,
   Legend,
   PieChart,
   Pie,
   Cell,
-  ResponsiveContainer,
-  Treemap
+  Treemap,
 } from "recharts";
 
 const GraficasUsoAplicacion = () => {
-
-  //  useEffect(() => {
-  //   // Simula la obtención de datos
-  //   setDataporcentaje([
-  //     { name: 'A', value: 400 },
-  //     { name: 'B', value: 300 },
-  //     { name: 'C', value: 300 },
-  //     { name: 'D', value: 200 }
-  //   ]);
-  // }, []);
-
-
-
-
-
-  //----------------------------> Piechart
   const dataporcentaje = [
-    {
-      name: "Profesionales", value: 150
-    },
-    {
-      name: "Usuarios", value: 1300
-    }
+    { name: "Profesionales", value: 150 },
+    { name: "Usuarios", value: 1300 },
   ];
-  const colores = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300']
-  //-----------------------------> BarChart
 
-
+  const colores = ["#8884d8", "#82ca9d", "#ffc658", "#ff7300"];
 
   const data = [
-
     {
-
       name: "17-25",
-
       Usuario_apoyo_emocional: 400,
-
       Usuario_divulgacion: 100,
-
       Profesional_apoyo_emocional: 200,
-
       Profesional_divulgacion: 50,
-
     },
-
     {
-
       name: "26-33",
-
       Usuario_apoyo_emocional: 100,
-
       Usuario_divulgacion: 30,
-
       Profesional_apoyo_emocional: 200,
-
       Profesional_divulgacion: 10,
-
     },
-
     {
-
       name: "34-41",
-
       Usuario_apoyo_emocional: 75,
-
       Usuario_divulgacion: 30,
-
       Profesional_apoyo_emocional: 200,
-
       Profesional_divulgacion: 10,
-
     },
-
     {
-
       name: "42-49",
-
       Usuario_apoyo_emocional: 80,
-
       Usuario_divulgacion: 30,
-
       Profesional_apoyo_emocional: 200,
-
       Profesional_divulgacion: 20,
-
     },
-
     {
-
       name: "50-60",
-
       Usuario_apoyo_emocional: 50,
-
       Usuario_divulgacion: 30,
-
       Profesional_apoyo_emocional: 200,
-
       Profesional_divulgacion: 20,
-
     },
-
     {
-
-      name: "Más de 61 ",
-
+      name: "Más de 61",
       Usuario_apoyo_emocional: 500,
-
       Usuario_divulgacion: 30,
-
       Profesional_apoyo_emocional: 200,
-
       Profesional_divulgacion: 10,
-
     },
-
   ];
 
-  //------------------------------> Treemap
   const dataTreemap = [
     {
-      name: 'Por un evento de la organización',
+      name: "Por un evento de la organización",
       children: [
-        { name: 'U', size: 100 },
-        { name: 'P', size: 20 },
-      ]
+        { name: "U", size: 100 },
+        { name: "P", size: 20 },
+      ],
     },
     {
-      name: 'Por familiares/amigos',
+      name: "Por familiares/amigos",
       children: [
-        { name: 'U', size: 50 },
-        { name: 'P', size: 10 },
-      ]
+        { name: "U", size: 50 },
+        { name: "P", size: 10 },
+      ],
     },
     {
-      name: 'Por noticias',
+      name: "Por noticias",
       children: [
-        { name: 'U', size: 150 },
-        { name: 'P', size: 100 },
-      ]
+        { name: "U", size: 150 },
+        { name: "P", size: 100 },
+      ],
     },
     {
-      name: 'Por redes sociales',
+      name: "Por redes sociales",
       children: [
-        { name: 'U', size: 800 },
-        { name: 'P', size: 20 },
-      ]
+        { name: "U", size: 800 },
+        { name: "P", size: 20 },
+      ],
     },
     {
-      name: 'Otros',
+      name: "Otros",
       children: [
-        { name: 'U', size: 200 },
-        { name: 'P', size: 0 },
-      ]
-    }
+        { name: "U", size: 200 },
+        { name: "P", size: 0 },
+      ],
+    },
   ];
-
-
-
-
-
 
   return (
     <div className="graficas-uso-aplicacion">
@@ -183,27 +111,48 @@ const GraficasUsoAplicacion = () => {
         <h3 className="tituloGraficas">
           Motivos de uso del chatbot según edad y tipo de usuario
         </h3>
-        <BarChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="Usuario_apoyo_emocional" stackId="a" fill="#e2007e" />
-          <Bar dataKey="Usuario_divulgacion" stackId="a" fill="#44bac1" />
-          <Bar dataKey="Profesional_apoyo_emocional" stackId="b" fill="#f45540" />
-          <Bar dataKey="Profesional_divulgacion" stackId="b" fill="#9c4aa0" />
-        </BarChart>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart
+            data={data}
+            margin={{
+              top: 10,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="Usuario_apoyo_emocional"
+              stroke="#e2007e"
+              strokeWidth={2}
+              activeDot={{ r: 8 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="Usuario_divulgacion"
+              stroke="#44bac1"
+              strokeWidth={2}
+            />
+            <Line
+              type="monotone"
+              dataKey="Profesional_apoyo_emocional"
+              stroke="#f45540"
+              strokeWidth={2}
+            />
+            <Line
+              type="monotone"
+              dataKey="Profesional_divulgacion"
+              stroke="#9c4aa0"
+              strokeWidth={2}
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </article>
       <article>
         <h3 className="tituloGraficas">% de uso del chatbot por tipo de usuario</h3>
@@ -214,7 +163,7 @@ const GraficasUsoAplicacion = () => {
             nameKey="name"
             cx="50%"
             cy="50%"
-            outerRadius={50}
+            outerRadius={120}
             label={(entry) => `${entry.name}: ${entry.value}`}
           >
             {dataporcentaje.map((entry, index) => (
@@ -225,7 +174,7 @@ const GraficasUsoAplicacion = () => {
       </article>
       <article>
         <h3 className="tituloGraficas">Por qué medio conocen FELGTBI+</h3>
-        <div style={{ width: "100%", height: 400 }}>
+        <div style={{ width: "92%", height: 300 }}>
           <ResponsiveContainer>
             <Treemap
               data={dataTreemap}

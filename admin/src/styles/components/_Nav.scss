@@ -7,7 +7,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
-  position: relative; /* Necesario para posicionar elementos hijos */
+  position: relative; 
 
   @media (max-width: $mobile-breakpoint) {
     flex-direction: column;

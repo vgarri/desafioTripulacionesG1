@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   padding: 4rem;
-  gap: 2rem;
+  gap: 1rem;
   position: relative;
 
   .boton-atras {
@@ -16,10 +16,10 @@
     background-color: $secondary-color;
     color: $light;
     font-family: $fuente;
-    font-size: 1rem;
+    font-size: 1.5rem;
     border: none;
     border-radius: 0;
-    padding: 1rem 1.5rem;
+    padding: 1rem 2rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
 
@@ -72,8 +72,8 @@
 
   // Ajustes específicos para pantallas pequeñas
   @media (max-width: $mobile-breakpoint) {
-    padding: 1rem;
-    gap: 1rem;
+    padding: 2rem;
+    gap: 2rem;
 
     .boton-atras {
       position: static; 
@@ -87,7 +87,9 @@
       padding: 1rem;
 
       .grafica-contenedor {
-        height: 250px; 
+        height: 350px; 
+        width: 100%;   
+        max-width: 100%; 
       }
     }
   }
