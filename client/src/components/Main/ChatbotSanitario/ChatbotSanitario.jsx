@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "../../../styles/components/_ChatbotSanitario.scss";
 import ChatbotLLM from "../ChatbotLLM/ChatbotLLM";
 import { useNavigate } from "react-router-dom";
+import ChatbotLLM2 from "../ChatbotLLM2/ChatbotLLM2";
 
 const initialData = {
   id_sesion: "",
@@ -221,7 +222,7 @@ function ChatbotSanitario() {
         <>
           <h2 className="chatbot-complete-message">¡Formulario completo!</h2>
           <button onClick={sendForm}>Enviar respuestas</button>
-          { LLM ? <ChatbotLLM data={datosFormulario}/> : ""}
+          { LLM ? <ChatbotLLM2/> : ""}
         </>
         </> )}
     </div>
