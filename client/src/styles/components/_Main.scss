@@ -120,6 +120,10 @@ html, body, #root {
       &:hover {
         transform: scale(1.07); 
       }
+      @media (max-width: $mobile-breakpoint) {
+        width: 150px;
+        height: 150px;
+      }
     }
 
     .card-text {
