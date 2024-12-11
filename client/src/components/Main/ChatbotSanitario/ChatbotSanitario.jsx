@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../../styles/components/_ChatbotSanitario.scss";
-import ChatbotLLM from "../ChatbotLLM/ChatbotLLM";
-import { useNavigate } from "react-router-dom";
 
 const initialData = {
   id_sesion: "",
@@ -17,8 +15,6 @@ const initialData = {
 };
 
 function ChatbotSanitario() {
-  const [datosFormulario, setdatosFormulario] = useState("");
-  const [LLM, setLLM] = useState(false);
   const [formData, setFormData] = useState(initialData);
   const [currentStep, setCurrentStep] = useState(0);
   const [inputValue, setInputValue] = useState("");
@@ -125,8 +121,6 @@ function ChatbotSanitario() {
   const sendForm = async () => {
     const sessionId = formData.id_sesion || "sesion_predeterminada";
 
-    setLLM(true);
-
     const updatedFormData = {
       ...formData,
       id_sesion: sessionId,
@@ -159,7 +153,6 @@ function ChatbotSanitario() {
       } else {
         console.log("Datos enviados correctamente:", updatedFormData);
         alert("¡Formulario enviado exitosamente!");
-        setdatosFormulario(updatedFormData);
       }
     } catch (error) {
       console.error("Error al enviar los datos:", error);
@@ -215,15 +208,13 @@ function ChatbotSanitario() {
             </button>
           </div>
           {error && <p className="error-message">{error}</p>}
-          
         </div>
-      ) : ( <>
-        <>
+      ) : (
+        <div>
           <h2 className="chatbot-complete-message">¡Formulario completo!</h2>
           <button onClick={sendForm}>Enviar respuestas</button>
-          { LLM ? <ChatbotLLM data={datosFormulario}/> : ""}
-        </>
-        </> )}
+        </div>
+      )}
     </div>
   );
 }
