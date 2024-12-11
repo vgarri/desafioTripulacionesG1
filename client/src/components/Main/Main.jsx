@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Chatbot from "./chatbot/Chatbot";
 import ChatbotSanitario from "./ChatbotSanitario/ChatbotSanitario";
-import ChatbotLLM from "./ChatbotLLM/ChatbotLLM";
+// import ChatbotLLM from "./ChatbotLLM/ChatbotLLM";
 
 const Main = () => {
   const [isProfesional, setIsProfesional] = useState(null);
