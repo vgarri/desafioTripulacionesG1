@@ -1,51 +1,5 @@
-import React, {useState, useEffect} from "react";
-import axios from "axios";
-
-const ChatbotLLM = ({ data }) => {
-  const [response, setResponse] = useState(null);
-
-  useEffect(() => {
-    const fetchLLMResponse = async () => {
-      try {
-        const response = await axios.post("http://52.214.54.221:8000/chatbot_profesional", {
-          sessionId: data.id_sesion,
-          userData: data,
-        });
-
-        if (response.status === 200) {
-          setResponse(response.data);
-        } else {
-          console.error("Error en la respuesta del LLM:", response.statusText);
-        }
-      } catch (error) {
-        console.error("Error al conectar con el LLM:", error);
-      }
-    };
-
-    if (data) {
-      fetchLLMResponse();
-    }
-  }, [data]);
-
-  return (
-    <div className="chatbot-llm-response">
-      {response ? (
-        <div>
-          <h3>Respuesta del LLM:</h3>
-          <p>{response.message}</p>
-        </div>
-      ) : (
-        <p>Cargando respuesta del LLM...</p>
-      )}
-    </div>
-  );
-};
-
-export default ChatbotLLM;
-
-
-
-
+// import React, {useState, useEffect} from "react";
+// import axios from "axios";
 
 // const ChatbotLLM = (data) => {
 //   // console.log(data)
