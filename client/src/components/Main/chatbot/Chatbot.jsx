@@ -275,8 +275,8 @@ function Chatbot() {
             key={index}
             className={`chatbot-history-item ${
               entry.type === "user"
-                ? "chat-message question"
-                : "chat-message answer"
+                ? "chat-message answer"
+                : "chat-message question"
             }`}
             ref={index === chatHistory.length - 1 ? lastMessageRef : null}
           >
