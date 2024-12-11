@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import {
   BarChart,
   Bar,
@@ -152,90 +153,113 @@ const GraficasUsuarios = () => {
   const filteredData = dataCommunities.filter((community) => community.name === selectedCommunity);
 
   return (
-    <div>
-      <button onClick={()=> navigate('/graficas')}>Atrás</button>
-      {/* Gráficas existentes */}
+    <div className="graficas-usuarios">
+     <button className="boton-atras" onClick={() => navigate('/graficas')}>
+    Atrás
+  </button>
 
-      <h3>Personas con/sin vih - Orientación Sexual</h3>
-      <ResponsiveContainer width="100%" height={500}>
-        <BarChart
-          data={data1}
-          margin={{ top: 30, right: 30, left: 20, bottom: 70 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" angle={-45} textAnchor="end" />
-          <YAxis />
-          <Tooltip />
-          <Legend verticalAlign="top" height={50} />
-          <Bar dataKey="conTratamiento" stackId="a" fill="#ff5722" name="Con tratamiento" />
-          <Bar dataKey="sinTratamiento" stackId="a" fill="#d500f9" name="Sin tratamiento" />
-          <Bar dataKey="sinVIH" stackId="a" fill="#00bcd4" name="Sin vih" />
-        </BarChart>
-      </ResponsiveContainer>
+      <div className="grafica-card">
+        <h3>Personas con/sin VIH - Orientación Sexual</h3>
+        <div className="grafica-contenedor">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={data1}
+              margin={{ top: 30, right: 30, left: 20, bottom: 70 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" angle={-45} textAnchor="end" />
+              <YAxis />
+              <Tooltip />
+              <Legend verticalAlign="top" height={50} />
+              <Bar dataKey="conTratamiento" stackId="a" fill="#ff5722" name="Con tratamiento" />
+              <Bar dataKey="sinTratamiento" stackId="a" fill="#d500f9" name="Sin tratamiento" />
+              <Bar dataKey="sinVIH" stackId="a" fill="#00bcd4" name="Sin VIH" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
 
-      <h3>Personas con/sin vih - Identidad de Género</h3>
-      <ResponsiveContainer width={700} height={500}>
-        <BarChart
-          data={data2}
-          margin={{ top: 30, right: 30, left: 20, bottom: 100 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" angle={-45} textAnchor="end" />
-          <YAxis />
-          <Tooltip />
-          <Legend verticalAlign="top" height={50} />
-          <Bar dataKey="tratamiento" stackId="a" fill="#ff5722" name="Tratamiento" />
-          <Bar dataKey="sinTratamiento" stackId="a" fill="#d500f9" name="Sin tratamiento" />
-          <Bar dataKey="sinVIH" stackId="a" fill="#00bcd4" name="Sin vih" />
-        </BarChart>
-      </ResponsiveContainer>
+      <div className="grafica-card">
+        <h3>Personas con/sin VIH - Identidad de Género</h3>
+        <div className="grafica-contenedor">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={data2}
+              margin={{ top: 30, right: 30, left: 20, bottom: 100 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" angle={-45} textAnchor="end" />
+              <YAxis />
+              <Tooltip />
+              <Legend verticalAlign="top" height={50} />
+              <Bar dataKey="tratamiento" stackId="a" fill="#ff5722" name="Tratamiento" />
+              <Bar dataKey="sinTratamiento" stackId="a" fill="#d500f9" name="Sin tratamiento" />
+              <Bar dataKey="sinVIH" stackId="a" fill="#00bcd4" name="Sin VIH" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
 
-      <h3>Usuarios con vih - Situación afectiva</h3>
-      <ResponsiveContainer width="100%" height={500}>
-        <RadarChart outerRadius="90%" data={dataRadar}>
-          <PolarGrid />
-          <PolarAngleAxis dataKey="subject" />
-          <PolarRadiusAxis angle={30} domain={[0, 400]} />
-          <Radar name="Total A" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
-          <Radar name="Total B" dataKey="B" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.6} />
-          <Radar name="Total C" dataKey="C" stroke="#ff7300" fill="#ff7300" fillOpacity={0.6} />
-        </RadarChart>
-      </ResponsiveContainer>
+      <div className="grafica-card">
+        <h3>Usuarios con VIH - Situación Afectiva</h3>
+        <div className="grafica-contenedor">
+          <ResponsiveContainer width="100%" height="100%">
+            <RadarChart outerRadius="90%" data={dataRadar}>
+              <PolarGrid />
+              <PolarAngleAxis dataKey="subject" />
+              <PolarRadiusAxis angle={30} domain={[0, 400]} />
+              <Radar name="Total A" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+              <Radar name="Total B" dataKey="B" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.6} />
+              <Radar name="Total C" dataKey="C" stroke="#ff7300" fill="#ff7300" fillOpacity={0.6} />
+            </RadarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
 
-      <FormControl fullWidth>
-        <InputLabel id="community-select-label">Comunidad Autónoma</InputLabel>
-        <Select
-          labelId="community-select-label"
-          value={selectedCommunity}
-          onChange={handleCommunityChange}
-        >
-          {dataCommunities.map((community) => (
-            <MuiMenuItem key={community.name} value={community.name}>
-              {community.name}
-            </MuiMenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      
 
-      <h3>Persona con vih y sin tratamiento</h3>
-      <ResponsiveContainer width={600} height={500}>
-        <LineChart data={formattedData} margin={{ top: 20, right: 20, left: 20, bottom: 80 }}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month"
-            angle={-45}
-            textAnchor='end'
-            dy={10} />
-          <YAxis />
-          <Tooltip />
-          <Legend verticalAlign="top" height={50} />
-          <Line
-            type="monotone"
-            dataKey="value"
-            stroke="#8884d8"
-            name={selectedCommunity}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+      <div className="grafica-card">
+        <FormControl fullWidth>
+          <InputLabel id="community-select-label">
+          Comunidad Autónoma
+          </InputLabel><br></br>
+          <Select
+            labelId="community-select-label"
+            value={selectedCommunity}
+            onChange={handleCommunityChange}
+          >
+            {dataCommunities.map((community) => (
+              <MuiMenuItem key={community.name} value={community.name}>
+                {community.name}
+              </MuiMenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      
+        <h3>Persona con VIH y sin tratamiento</h3>
+        <div className="grafica-contenedor">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={formattedData} margin={{ top: 20, right: 20, left: 20, bottom: 80 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis
+                dataKey="month"
+                angle={-45}
+                textAnchor="end"
+                dy={10}
+              />
+              <YAxis />
+              <Tooltip />
+              <Legend verticalAlign="top" height={50} />
+              <Line
+                type="monotone"
+                dataKey="value"
+                stroke="#8884d8"
+                name={selectedCommunity}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
     </div>
   );
 };
