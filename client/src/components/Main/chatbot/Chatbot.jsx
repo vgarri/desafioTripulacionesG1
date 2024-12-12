@@ -19,6 +19,8 @@ const initialData = {
 };
 
 function Chatbot() {
+  const [envioCondicionesIniciales, setEnvioCondicionesIniciales] = useState(false);
+  const [AjusteScroll, setAjusteScroll] = useState(true);
   const [formData, setFormData] = useState(initialData);
   const [currentStep, setCurrentStep] = useState(0);
   const [inputValue, setInputValue] = useState("");
@@ -195,10 +197,14 @@ function Chatbot() {
   };
 
   const sendLLMRequest = async () => {
-    sendForm();
+    if (!envioCondicionesIniciales) {
+      sendForm()
+      setEnvioCondicionesIniciales(true)
+    }
+
     const url = "http://52.214.54.221:8000/chatbot_usuario";
     const dataForLLM = {
-      pregunta_usuario: userQuestion || "Sin pregunta específica",
+      pregunta_usuario: userQuestion || "Hola, necesito ayuda",
       municipio: formData.municipio_residencia || "N/A",
       ccaa: formData.ccaa || "N/A",
       conocer_felgtbi: formData.como_conocio_felgtbi || "N/A",
@@ -212,22 +218,39 @@ function Chatbot() {
       us_situacion_afectiva: formData.situacion_afectiva || "N/A",
       us_hablado: formData.hablado_con_alguien || "N/A",
     };
+    const url_llmPromptDecisor = 'http://52.214.54.221:8000/prompt_decisor';
+    const promptLLM = {
+      id_sesion: "prueba_raul_limpiador", 
+      user_input: userQuestion
+    };
 
     setChatHistory((prevHistory) => [
       ...prevHistory,
-      { type: "user", message: userQuestion || "Sin pregunta específica" },
+      { type: "user", message: userQuestion || "Hola, necesito ayuda" },
     ]);
 
     setIsLLMLoading(true);
+
     try {
-      const response = await axios.post(url, dataForLLM, {
-        headers: { "Content-Type": "application/json" },
+      const response = await axios.post(url_llmPromptDecisor, promptLLM, {
+        headers: { "Content-Type": "application/json" }
       });
-      if (response.status === 200) {
-        setLLMmessage(response.data.respuesta_chat);
+      if (response.status === 200 && response.data.outpuut.tipo === "abierta") {
+        setAjusteScroll(true);
+        setLLMmessage(response.data.outpuut.message);
         setChatHistory((prevHistory) => [
           ...prevHistory,
-          { type: "bot", message: response.data.respuesta_chat },
+          { type: "bot", message: response.data.outpuut.message },
+        ]);
+        console.log(response.data);
+      }
+      if (response.status === 200 && response.data.outpuut.tipo === "cerrada") {
+
+        setAjusteScroll(true)
+        setLLMmessage(response.data.outpuut.message);
+        setChatHistory((prevHistory) => [
+          ...prevHistory,
+          { type: "bot", message: response.data.outpuut.message },
         ]);
       }
     } catch (error) {
@@ -275,8 +298,8 @@ function Chatbot() {
             key={index}
             className={`chatbot-history-item ${
               entry.type === "user"
-                ? "chat-message question"
-                : "chat-message answer"
+                ? "chat-message answer"
+                : "chat-message question"
             }`}
             ref={index === chatHistory.length - 1 ? lastMessageRef : null}
           >
