@@ -65,7 +65,7 @@ function Chatbot() {
           },
           {
             key: "genero",
-            question: "¿Cuál es tu género?",
+            question: "¿Cuál es tu identidad de género?",
             validate: (value) => value.trim().length > 0,
             errorMessage: "Por favor, especifica tu género.",
           },
@@ -83,13 +83,13 @@ function Chatbot() {
           },
           {
             key: "tiene_vih",
-            question: "¿Tienes diagnóstico previo de VIH?",
+            question: "¿Tienes diagnóstico previo de vih?",
             validate: (value) => ["si", "no"].includes(value.toLowerCase()),
             errorMessage: "Por favor, responde con 'Sí' o 'No'.",
           },
           {
             key: "fecha_diagnostico",
-            question: "¿Cuándo recibiste el diagnóstico de VIH?",
+            question: "¿Cuándo recibiste el diagnóstico de vih?",
             options: [
               "Menos de un mes",
               "Entre 1 y 3 meses",
@@ -108,7 +108,7 @@ function Chatbot() {
           },
           {
             key: "fecha_inicio_tratamiento",
-            question: "¿Desde cuándo recibes tratamiento para el VIH?",
+            question: "¿Desde cuándo recibes tratamiento para el vih?",
             options: [
               "Menos de un mes",
               "Entre 1 y 3 meses",
