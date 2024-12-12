@@ -46,6 +46,14 @@ const ChatbotLLM2 = (data) => {
     id_sesion: "prueba_raul_limpiador",
     user_input: userInput
   }
+  const promptLLMArbol = {
+    id_sesion: "prueba_raul_limpiador",
+    user_input: userQuestion,
+    primera_ejecucion: true,
+    final: false,
+    dict_preg_resp: "",
+    
+  }
   // console.log(promptLLM);
 
   //usuario ? url_usuario : 
@@ -53,8 +61,8 @@ const ChatbotLLM2 = (data) => {
 
 // interaccionLLM No hace falta mostrarlo por pantalla. Esta accion solo es la de condicionar el LLM
   const interaccionLLM = async () => {
-    const url_usuario = 'http://52.214.54.221:8000/chatbot_usuario'
-    const url_sanitario = 'http://52.214.54.221:8000/chatbot_profesional'
+    const url_usuario = 'https://desafio-final-vqry.onrender.com/chatbot_usuario'
+    const url_sanitario = 'https://desafio-final-vqry.onrender.com/chatbot_profesional'
     try {
       const response = await axios.post(url_usuario, data1, {
         headers: { "Content-Type": "application/json" }
@@ -72,8 +80,8 @@ const ChatbotLLM2 = (data) => {
   // crear unn estado para manejar cuando llegan los datos como props 
 
   const interaccionLLMconBucle = async () => {
-    const url_llmPromptDecisor = 'http://52.214.54.221:8000/prompt_decisor'
-    const url_llmPromptDecisorSanitario = 'http://52.214.54.221:8000/chatbot_profesional'
+    const url_llmPromptDecisor = 'https://desafio-final-vqry.onrender.com/prompt_decisor'
+    const url_llmPromptDecisorSanitario = 'https://desafio-final-vqry.onrender.com/chatbot_profesional'
     try {
       const response = await axios.post(url_llmPromptDecisor, promptLLM, {
         headers: { "Content-Type": "application/json" }
@@ -96,10 +104,10 @@ const ChatbotLLM2 = (data) => {
   };
 // SI LA PREGUNTA ES CERRADA SIGUIENTE prompt
   const interaccionLLMconBucleParaRespuestaCerrada = async () => {
-    const url_llmPromptDecisor2 = 'http://52.214.54.221:8000/prompt_decisor'
-    const url_llmPromptDecisorSanitario2 = 'http://52.214.54.221:8000/chatbot_profesional'
+    const url_llmPromptDecisor2 = 'https://desafio-final-vqry.onrender.com/prompt_decisor'
+    const url_llmPromptDecisorSanitario2 = 'https://desafio-final-vqry.onrender.com/chatbot_profesional'
     try {
-      const response = await axios.post(url_llmPromptDecisor2, promptLLM, {
+      const response = await axios.post(url_llmPromptDecisor2, promptLLMArbol, {
         headers: { "Content-Type": "application/json" }
       })
       if (response.status === 200) {
@@ -112,7 +120,30 @@ const ChatbotLLM2 = (data) => {
       console.log(error);
     }
   };
+  const interaccionLLMconBucleParaRespuestaCerradaPromptArbol = async () => {
+    
+    const url_llmPromptArbol = 'http://52.214.54.221:8000/prompt_arbol'
+    const url_llmPromptDecisorSanitario2 = 'http://52.214.54.221:8000/chatbot_profesional'
+    try {
+      const response = await axios.post(url_llmPromptArbol, promptLLM2, {
+        headers: { "Content-Type": "application/json" }
+      })
+      if (response.status === 200) {
+        setRespuestaLLMIteracion(response.data.outpuut.message)
+        setPrimeraEjecucion(false);
+        setFinal(true);
+        setDict_preg_resp(response.data.outpuut.dict_preg_resp);
+        console.log(response.data);
+        setIteracion(2)
+        console.log(2)
+        //await interaccionLLMconBucleParaRespuestaCerrada2();
+      }
+    }
 
+    catch (error) {
+      console.log(error);
+    }
+  };
 
 
 
