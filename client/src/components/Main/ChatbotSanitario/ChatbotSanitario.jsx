@@ -396,7 +396,7 @@ function ChatbotSanitario() {
       </div>
 
       {formSent ? (
-        <div className="chatbot-history">
+        <div>
           <div className="chat-input-container">
             <div className="chat-input">
               <input
