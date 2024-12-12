@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "../../../styles/components/_ChatbotSanitario.scss";
-import ChatbotLLM from "../ChatbotLLM/ChatbotLLM";
+//import ChatbotLLM from "../ChatbotLLM/ChatbotLLM";
 import { useNavigate } from "react-router-dom";
-import ChatbotLLM2 from "../ChatbotLLM2/ChatbotLLM2";
+//import ChatbotLLM2 from "../ChatbotLLM2/ChatbotLLM2";
 
 
 const initialData = {

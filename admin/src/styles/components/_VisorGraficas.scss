@@ -50,22 +50,25 @@
         }
 
         .imagen-boton {
-          width: 250px;   
-          height: 250px;
+          width: 300px;
+          height: 300px;
+          margin: 0 auto 2rem auto;
+          border-radius: 50%;
           object-fit: cover;
-          border-radius:250px;
+          border: 5px solid lighten($primary-color, 50%);
           margin-bottom: 0.8rem;
           transition: transform 0.3s ease, box-shadow 0.3s ease;
 
           &:hover {
-            transform: scale(1.07); 
+            transform: scale(1.07);
           }
         }
       }
     }
 
     // Estilos para el botón "Atrás"
-    .boton-atras, article button {
+    .boton-atras,
+    article button {
       background: $secondary-color;
       color: $light;
       font-size: 1.5rem;
@@ -98,13 +101,14 @@
           height: auto;
 
           .imagen-boton {
-            width: 120px;   
+            width: 120px;
             height: 120px;
           }
         }
       }
 
-      .boton-atras, article button {
+      .boton-atras,
+      article button {
         width: auto;
         padding: 0.7rem 1.2rem;
         font-size: 1.2rem;

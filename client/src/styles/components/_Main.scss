@@ -115,6 +115,7 @@ html, body, #root {
       height: 250px;
       object-fit: cover;
       border-radius:250px;
+      border: 5px solid lighten($primary-color, 50%);
       margin-bottom: 0.8rem;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       &:hover {
