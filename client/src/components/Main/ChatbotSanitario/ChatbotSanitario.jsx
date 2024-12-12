@@ -37,6 +37,7 @@ function ChatbotSanitario() {
   const [chatHistory, setChatHistory] = useState([]);
   const chatHistoryRef = useRef(null);
   const lastMessageRef = useRef(null);
+  
 
   const steps = [
     {
@@ -177,7 +178,6 @@ function ChatbotSanitario() {
         alert("Error al enviar el formulario. Por favor, inténtalo de nuevo.");
       } else {
         console.log("Datos enviados correctamente:", updatedFormData);
-        alert("¡Formulario enviado exitosamente!");
       }
     } catch (error) {
       console.error("Error al enviar los datos:", error);
@@ -365,6 +365,7 @@ function ChatbotSanitario() {
     }
   }, [currentStep, AjusteScroll]);
 
+
   return (
     <div className="chatbot-container">
       <div className="chatbot-history" ref={chatHistoryRef}>
@@ -396,25 +397,33 @@ function ChatbotSanitario() {
       </div>
 
       {formSent ? (
-        <div>
-          <h2 className="chatbot-complete-message">
-            ¡Gracias! Tus respuestas se enviaron correctamente.
-          </h2>
+        <div className="chatbot-history">
           <div className="chat-input-container">
-            <h3>Escribe tu pregunta para el LLM:</h3>
             <div className="chat-input">
               <input
                 type="text"
                 className="chatbot-input"
                 value={userQuestion}
-                onChange={(e) => setUserQuestion(e.target.value)}
+                onChange={(e) => setUserQuestion(e.target.value)} 
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    sendLLMRequest();
+                    setUserQuestion("");  
+                  }
+                }}
                 placeholder="Escribe tu pregunta aquí"
               />
-              {!promptArbol ? <button className="chatbot-submit" onClick={sendLLMRequest}> 
+              {!promptArbol ? <button className="chatbot-submit"  onClick={() => {
+              sendLLMRequest();
+              setUserQuestion("");
+            }} > 
                 Enviar
               </button>
               : ""}
-              {promptArbol ? <button className="chatbot-submit" onClick={sendLLMRequestPromptArbol}>Enviar</button> : ""}
+              {promptArbol ? <button className="chatbot-submit" onClick={() => {
+              sendLLMRequestPromptArbol();
+              setUserQuestion("");
+            }}>Enviar</button> : ""}
             </div>
           </div>
           {isLLMLoading && <h3>Cargando respuesta...</h3>}
