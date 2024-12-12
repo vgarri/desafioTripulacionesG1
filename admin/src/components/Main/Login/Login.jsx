@@ -96,7 +96,7 @@ const LoginTest = (e) => {
       });
       if (response.status === 200){
         onLogin();
-        alert(`admin login was succesful`)
+        alert(`inicio de sesión`)
         
         navigate('./graficas')
         //actualizar el context y navigate al dashboard
@@ -119,7 +119,7 @@ const LoginTest = (e) => {
       <img src="/admin.jpg" alt="Admin Panel" className="login-image" />
         <h1 className="login-title">Panel de Administrador</h1>
 
-        <form className="login-form" onSubmit={onLogin}>
+        <form className="login-form" onSubmit={handleLogin}>
 
 
 

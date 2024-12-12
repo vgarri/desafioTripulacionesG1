@@ -19,7 +19,10 @@ const initialData = {
 };
 
 function Chatbot() {
+  const [primera_ejecucion, setPrimera_ejecucion] = useState(true);
   const [envioCondicionesIniciales, setEnvioCondicionesIniciales] = useState(false);
+  const [esAbierta, setEsAbierta] = useState(false);
+  const [esCerrada, setEsCerrada] = useState(false);
   const [promptArbol, setPromptArbol] = useState(false);
   const [AjusteScroll, setAjusteScroll] = useState(true);
   const [formData, setFormData] = useState(initialData);
@@ -167,6 +170,7 @@ function Chatbot() {
   };
 
   const sendForm = async () => {
+    
     const sessionId = formData.id_sesion || `sesion_${Date.now()}`;
     const updatedFormData = {
       ...formData,
@@ -190,7 +194,7 @@ function Chatbot() {
       }
 
       console.log("Datos enviados correctamente:", updatedFormData);
-      alert("¡Formulario enviado exitosamente!");
+      // alert("¡Formulario enviado exitosamente!");
     } catch (error) {
       console.error("Error al enviar los datos:", error);
       alert("Hubo un error al enviar los datos: " + error.message);
@@ -237,6 +241,7 @@ function Chatbot() {
         headers: { "Content-Type": "application/json" }
       });
       if (response.status === 200 && response.data.outpuut.tipo === "abierta") {
+        setEsAbierta(true)
         setAjusteScroll(true);
         setLLMmessage(response.data.outpuut.message);
         setChatHistory((prevHistory) => [
@@ -246,7 +251,8 @@ function Chatbot() {
         console.log(response.data);
       }
       if (response.status === 200 && response.data.outpuut.tipo === "cerrada") {
-
+        setEsCerrada(true)
+        setPromptArbol(true);
         setAjusteScroll(true)
         setLLMmessage(response.data.outpuut.message);
         setChatHistory((prevHistory) => [
@@ -264,7 +270,58 @@ function Chatbot() {
       setIsLLMLoading(false);
     }
   };
+  const sendLLMRequestPromptArbol = async () => {
+    if (!envioCondicionesIniciales) {
+      sendForm()
+      setEnvioCondicionesIniciales(true)
+    }
 
+    const urlPromptArbol = "https://desafio-final-vqry.onrender.com/prompt_arbol"
+    const promptLLMArbol = {
+      id_sesion: "prueba_raul_limpiador",
+      user_input: userQuestion,
+      primera_ejecucion: true,
+      final: false,
+      dict_preg_resp: {},
+    };
+    // const promptLLMArbolprueba = { 
+    // id_sesion: "prueba_raul_limpiador",
+    // user_input: "hola necesito ayuda con tratamiento",
+    // primera_ejecucion: false,
+    // final: false,
+    // dict_preg_resp: {}
+    // }
+    setChatHistory((prevHistory) => [
+      ...prevHistory,
+      { type: "user", message: userQuestion || "Hola, necesito ayuda" },
+    ]);
+
+    setIsLLMLoading(true);
+    try {
+      const response = await axios.post(urlPromptArbol, promptLLMArbol, {
+        headers: { "Content-Type": "application/json" }
+      });
+      if (response.status === 200) {
+       
+        setAjusteScroll(true);
+        setLLMmessage(response.data.outpuut.message);
+        setChatHistory((prevHistory) => [
+          ...prevHistory,
+          { type: "bot", message: response.data.outpuut.message },
+        ]);
+        console.log(response.data);
+      }
+      
+    } catch (error) {
+      console.error("Error en la interacción con el LLM:", error);
+      setChatHistory((prevHistory) => [
+        ...prevHistory,
+        { type: "bot", message: "Hubo un error al procesar tu solicitud." },
+      ]);
+    } finally {
+      setIsLLMLoading(false);
+    }
+  };
   useEffect(() => {
     if (lastMessageRef.current) {
       lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
@@ -310,21 +367,26 @@ function Chatbot() {
       </div>
       {formSent ? (
         <div>
-          <h2 className="chatbot-complete-message">
-            ¡Gracias! Tus respuestas se enviaron correctamente.
-          </h2>
-          <div className="chat-input-container">
-            <h3>Escribe tu pregunta para el LLM:</h3>
-            <input
-              type="text"
-              className="chatbot-input"
-              value={userQuestion}
-              onChange={(e) => setUserQuestion(e.target.value)}
-              placeholder="Escribe tu pregunta aquí"
+         <div className="chat-input">
+              <input
+                type="text"
+                className="chatbot-input"
+                value={userQuestion}
+                onChange={(e) => setUserQuestion(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && sendLLMRequest() || sendLLMRequestPromptArbol()}
+                placeholder="Escribe tu pregunta aquí"
             />
-            <button className="chatbot-submit" onClick={sendLLMRequest}>
-              Enviar al LLM
-            </button>
+            {!promptArbol ? <button className="chatbot-submit" onClick={() => {
+              sendLLMRequest();
+              setUserQuestion("");
+            }} > 
+                Enviar
+              </button>
+              : ""}
+              {promptArbol ? <button className="chatbot-submit" onClick={() => {
+              sendLLMRequestPromptArbol();
+              setUserQuestion("");
+            }} > Enviar</button> : ""}
           </div>
           {isLLMLoading && <h3>Cargando respuesta...</h3>}
         </div>
