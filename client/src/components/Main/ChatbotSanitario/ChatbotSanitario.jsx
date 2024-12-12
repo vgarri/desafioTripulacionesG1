@@ -70,7 +70,7 @@ function ChatbotSanitario() {
     },
     {
       key: "vih_diagnostico",
-      question: "¿Cuándo recibiste el diagnóstico de vih?",
+      question: "¿Cuándo recibio el diagnóstico de vih?",
       options: [
         "Menos de un mes",
         "Entre 1 y 3 meses",
@@ -89,7 +89,7 @@ function ChatbotSanitario() {
     },
     {
       key: "vih_tratamiento",
-      question: "¿Desde cuándo recibes tratamiento para el vih?",
+      question: "¿Desde cuándo recibe tratamiento para el vih?",
       options: [
         "Menos de un mes",
         "Entre 1 y 3 meses",
