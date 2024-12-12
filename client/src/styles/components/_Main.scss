@@ -31,7 +31,6 @@ html, body, #root {
   }
 }
 
-// Contenedor principal del App
 .app-container {
   display: flex;
   flex-direction: column;
@@ -77,18 +76,46 @@ html, body, #root {
   padding: 2rem;
 
   p {
-    font-size: 1.8rem;
+    font-size: 2.2rem; 
+    font-family: $fuente;
+    font-weight: 400;
     color: $light;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: $mobile-breakpoint) {
+      font-size: 1.4rem; 
+      margin-bottom: 0rem; 
+    }
   }
 
   .card-group {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
 
     @media (max-width: $mobile-breakpoint) {
       flex-direction: column;
       align-items: center;
+      gap: 1rem; // Ajuste del espacio entre botones en pantallas pequeñas
+
+      .card {
+        width: 90%;
+        max-width: 350px;
+        padding: 1.2rem;
+        font-size: 1.6rem;
+        border-radius: 8px;
+
+        .card-image {
+          width: 160px;
+          height: 160px;
+        }
+
+        .card-text {
+          font-size: 1.8rem;
+          font-weight: 500;
+        }
+      }
     }
   }
 
@@ -114,22 +141,22 @@ html, body, #root {
       width: 250px;   
       height: 250px;
       object-fit: cover;
-      border-radius:250px;
+      border-radius: 250px;
+      border: 5px solid lighten($primary-color, 50%);
       margin-bottom: 0.8rem;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+
       &:hover {
         transform: scale(1.07); 
-      }
-      @media (max-width: $mobile-breakpoint) {
-        width: 150px;
-        height: 150px;
       }
     }
 
     .card-text {
-      font-size: 1.2rem;
+      font-size: 2rem;  
+      font-family: $fuente;
+      font-weight: 400;
       color: $primary-color;
-      font-weight: bold;
+      letter-spacing: 0.05em;
     }
   }
 }
@@ -144,23 +171,8 @@ html, body, #root {
     flex-direction: column;
     gap: 1.5rem;
 
-    .card {
-      width: 100%;
-    }
-  }
-}
-
-@media (max-width: $mobile-breakpoint) {
-  .main-selection-container {
-    padding: 1rem;
-  }
-
-  .card-group {
-    gap: 1rem;
-
-    .card {
-      font-size: 1rem;
-      padding: 0.8rem 1.5rem;
+    p, .card .card-text {
+      font-size: 1.8rem; 
     }
   }
 }

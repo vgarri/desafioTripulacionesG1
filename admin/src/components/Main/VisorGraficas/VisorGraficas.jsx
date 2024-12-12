@@ -48,7 +48,7 @@ const VisorGraficas = () => {
            <div className="botones-iniciales">
   <button onClick={handleVerGraficas}>
     <img 
-      src="/6491958.jpg" 
+      src="/bot.jpg" 
       alt="Ver gráficas de uso del chatbot" 
       className="imagen-boton" 
     />
@@ -57,7 +57,7 @@ const VisorGraficas = () => {
 
   <button onClick={handleIrAGraficasUsuarios}>
     <img 
-      src="/6491954.jpg" 
+      src="/bot2.jpg" 
       alt="Ir a Gráficas Usuarios" 
       className="imagen-boton" 
     />

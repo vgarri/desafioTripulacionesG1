@@ -16,11 +16,11 @@ const Main = () => {
           <p>Por favor, elige si eres un Usuario o un Profesional.</p>
           <div className="card-group">
             <div onClick={handleUserClick} className="card">
-              <img src="/6491954.jpg" alt="Soy Usuario" className="card-image" />
+              <img src="/usuario.jpg" alt="Soy Usuario" className="card-image" />
               <p className="card-text">Soy Usuario</p>
             </div>
             <div onClick={handleProfesionalClick} className="card">
-              <img src="/6491958.jpg" alt="Soy Profesional" className="card-image" />
+              <img src="/profesional.jpg" alt="Soy Profesional" className="card-image" />
               <p className="card-text">Soy Profesional</p>
             </div>
           </div>
