@@ -20,6 +20,7 @@ const initialData = {
 
 function Chatbot() {
   const [envioCondicionesIniciales, setEnvioCondicionesIniciales] = useState(false);
+  const [promptArbol, setPromptArbol] = useState(false);
   const [AjusteScroll, setAjusteScroll] = useState(true);
   const [formData, setFormData] = useState(initialData);
   const [currentStep, setCurrentStep] = useState(0);
@@ -173,7 +174,7 @@ function Chatbot() {
     };
 
     try {
-      const response = await fetch("http://52.214.54.221:8000/respuesta-usuario", {
+      const response = await fetch("https://desafio-final-vqry.onrender.com/respuesta-usuario", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -202,7 +203,7 @@ function Chatbot() {
       setEnvioCondicionesIniciales(true)
     }
 
-    const url = "http://52.214.54.221:8000/chatbot_usuario";
+    const url = "https://desafio-final-vqry.onrender.com/chatbot_usuario";
     const dataForLLM = {
       pregunta_usuario: userQuestion || "Hola, necesito ayuda",
       municipio: formData.municipio_residencia || "N/A",
@@ -218,7 +219,7 @@ function Chatbot() {
       us_situacion_afectiva: formData.situacion_afectiva || "N/A",
       us_hablado: formData.hablado_con_alguien || "N/A",
     };
-    const url_llmPromptDecisor = 'http://52.214.54.221:8000/prompt_decisor';
+    const url_llmPromptDecisor = 'https://desafio-final-vqry.onrender.com/prompt_decisor';
     const promptLLM = {
       id_sesion: "prueba_raul_limpiador", 
       user_input: userQuestion
@@ -553,7 +554,7 @@ export default Chatbot;
 //     }
 
 //     try {
-//       const response = await fetch("http://52.214.54.221:8000/respuesta-profesional", {
+//       const response = await fetch("https://desafio-final-vqry.onrender.com//respuesta-profesional", {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -579,7 +580,7 @@ export default Chatbot;
 
 //   const sendLLMRequest = async () => {
 //     sendForm();
-//     const url = "http://52.214.54.221:8000/chatbot_usuario";
+//     const url = "https://desafio-final-vqry.onrender.com//chatbot_usuario";
 //     const dataForLLM = {
 //       pregunta_usuario: userQuestion || "Sin pregunta específica",
 //       municipio: formData.municipio_residencia || "N/A",
@@ -892,7 +893,7 @@ export default Chatbot;
 //   };
 
 //   const sendLLMRequest = async () => {
-//     const url = "http://52.214.54.221:8000/chatbot_usuario";
+//     const url = "https://desafio-final-vqry.onrender.com//chatbot_usuario";
 //     const dataForLLM = {
 //       pregunta_usuario: userQuestion || "Sin pregunta específica",
 //       municipio: formData.municipio_residencia || "N/A",
@@ -1181,7 +1182,7 @@ export default Chatbot;
 //   };
 
 //   const sendLLMRequest = async () => {
-//     const url = "http://52.214.54.221:8000/chatbot_usuario";
+//     const url = "https://desafio-final-vqry.onrender.com//chatbot_usuario";
 //     const dataForLLM = {
 //       pregunta_usuario: userQuestion || "Sin pregunta específica",
 //       municipio: formData.municipio_residencia || "N/A",
@@ -1448,7 +1449,7 @@ export default Chatbot;
 //     const updatedFormData = { ...formData, id_sesion: sessionId };
 
 //     try {
-//       const response = await fetch("http://52.214.54.221:8000/respuesta-usuario", {
+//       const response = await fetch("https://desafio-final-vqry.onrender.com//respuesta-usuario", {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",

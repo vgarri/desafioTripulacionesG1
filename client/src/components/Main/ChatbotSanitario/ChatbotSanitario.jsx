@@ -20,6 +20,8 @@ const initialData = {
 };
 
 function ChatbotSanitario() {
+  const [primera_ejecucion, setPrimera_ejecucion] = useState(true);
+  const [promptArbol, setPromptArbol] = useState(false);
   const [envioCondicionesIniciales, setEnvioCondicionesIniciales] = useState(false);
   const [AjusteScroll, setAjusteScroll] = useState(true);
   const [esAbierta, setEsAbierta] = useState(false);
@@ -159,7 +161,7 @@ function ChatbotSanitario() {
 
     try {
       const response = await fetch(
-        "http://52.214.54.221:8000/respuesta-profesional",
+        "https://desafio-final-vqry.onrender.com/respuesta-profesional",
         {
           method: "POST",
           headers: {
@@ -189,8 +191,8 @@ function ChatbotSanitario() {
 
 
   const interaccionLLMconBucle = async () => {
-    const url_llmPromptDecisor = 'http://52.214.54.221:8000/prompt_decisor'
-    const url_llmPromptDecisorSanitario = 'http://52.214.54.221:8000/chatbot_profesional'
+    const url_llmPromptDecisor = 'https://desafio-final-vqry.onrender.com/prompt_decisor'
+    const url_llmPromptDecisorSanitario = 'https://desafio-final-vqry.onrender.com/chatbot_profesional'
     const promptLLM={
       id_sesion: "prueba_raul_limpiador",
       user_input: userQuestion
@@ -231,7 +233,7 @@ function ChatbotSanitario() {
       setEnvioCondicionesIniciales(true)
     }
 
-    const url = "http://52.214.54.221:8000/chatbot_profesional";
+    const url = "https://desafio-final-vqry.onrender.com/chatbot_profesional";
     const dataForLLM = {
       pregunta_profesional: userQuestion || "Hola, necesito ayuda",
       municipio: formData.municipio_residencia || "N/A",
@@ -244,12 +246,19 @@ function ChatbotSanitario() {
       pro_especialidad: formData.especialidad || "N/A",
       pro_vih_profesional: formData.ha_tratado_vih || "N/A",
     };
-    const url_llmPromptDecisor = 'http://52.214.54.221:8000/prompt_decisor';
+    const url_llmPromptDecisor = 'https://desafio-final-vqry.onrender.com/prompt_decisor';
     const promptLLM = {
       id_sesion: "prueba_raul_limpiador", 
       user_input: userQuestion
     };
-
+    const promptLLMArbol = {
+      id_sesion: "prueba_raul_limpiador",
+      user_input: userQuestion,
+      primera_ejecucion: true,
+      final: false,
+      dict_preg_resp: "",
+      
+    };
     setChatHistory((prevHistory) => [
       ...prevHistory,
       { type: "user", message: userQuestion || "Hola, necesito ayuda" },
@@ -272,6 +281,7 @@ function ChatbotSanitario() {
       }
       if (response.status === 200 && response.data.outpuut.tipo === "cerrada") {
         setEsCerrada(true)
+        setPromptArbol(true)
         setAjusteScroll(true)
         setLLMmessage(response.data.outpuut.message);
         setChatHistory((prevHistory) => [
@@ -279,6 +289,58 @@ function ChatbotSanitario() {
           { type: "bot", message: response.data.outpuut.message },
         ]);
       }
+    } catch (error) {
+      console.error("Error en la interacción con el LLM:", error);
+      setChatHistory((prevHistory) => [
+        ...prevHistory,
+        { type: "bot", message: "Hubo un error al procesar tu solicitud." },
+      ]);
+    } finally {
+      setIsLLMLoading(false);
+    }
+  };
+  const sendLLMRequestPromptArbol = async () => {
+    if (!envioCondicionesIniciales) {
+      sendForm()
+      setEnvioCondicionesIniciales(true)
+    }
+
+    const urlPromptArbol = "https://desafio-final-vqry.onrender.com/prompt_arbol"
+    const promptLLMArbol = {
+      id_sesion: "prueba_raul_limpiador",
+      user_input: userQuestion,
+      primera_ejecucion: true,
+      final: false,
+      dict_preg_resp: {},
+    };
+    const promptLLMArbolprueba = { 
+    id_sesion: "prueba_raul_limpiador",
+    user_input: "hola necesito ayuda con tratamiento",
+    primera_ejecucion: false,
+    final: false,
+    dict_preg_resp: {}
+    }
+    setChatHistory((prevHistory) => [
+      ...prevHistory,
+      { type: "user", message: userQuestion || "Hola, necesito ayuda" },
+    ]);
+
+    setIsLLMLoading(true);
+    try {
+      const response = await axios.post(urlPromptArbol, promptLLMArbol, {
+        headers: { "Content-Type": "application/json" }
+      });
+      if (response.status === 200) {
+       
+        setAjusteScroll(true);
+        setLLMmessage(response.data.outpuut.message);
+        setChatHistory((prevHistory) => [
+          ...prevHistory,
+          { type: "bot", message: response.data.outpuut.message },
+        ]);
+        console.log(response.data);
+      }
+      
     } catch (error) {
       console.error("Error en la interacción con el LLM:", error);
       setChatHistory((prevHistory) => [
@@ -348,9 +410,11 @@ function ChatbotSanitario() {
                 onChange={(e) => setUserQuestion(e.target.value)}
                 placeholder="Escribe tu pregunta aquí"
               />
-              <button className="chatbot-submit" onClick={sendLLMRequest}>
-                Enviar al LLM
+              {!promptArbol ? <button className="chatbot-submit" onClick={sendLLMRequest}> 
+                Enviar
               </button>
+              : ""}
+              {promptArbol ? <button className="chatbot-submit" onClick={sendLLMRequestPromptArbol}>Enviar</button> : ""}
             </div>
           </div>
           {isLLMLoading && <h3>Cargando respuesta...</h3>}
