@@ -49,8 +49,8 @@
 
 
 //   const interaccionLLM = async () => {
-//     const url_usuario = 'http://52.214.54.221:8000/chatbot_usuario'
-//     const url_sanitario = 'http://52.214.54.221:8000/chatbot_profesional'
+//     const url_usuario = 'https://desafio-final-vqry.onrender.com//chatbot_usuario'
+//     const url_sanitario = 'https://desafio-final-vqry.onrender.com//chatbot_profesional'
 //       try {
 //           const response = await axios.post(url_usuario, data1,{
 //               headers: { "Content-Type": "application/json"}
