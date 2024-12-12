@@ -22,7 +22,12 @@ const Footer = () => {
             <i className="fab fa-linkedin"></i>
           </a>
         </div>
-        <button className="footer-button">Chatbot</button>
+        <button
+          className="footer-button"
+          onClick={() => window.location.href = 'https://felgtbichatbot.netlify.app/'}
+        >
+          Chatbot
+        </button>
       </div>
     </footer>
   );
