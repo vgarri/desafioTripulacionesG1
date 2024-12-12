@@ -233,7 +233,7 @@ function ChatbotSanitario() {
 
     const url = "http://52.214.54.221:8000/chatbot_profesional";
     const dataForLLM = {
-      pregunta_profesional: userQuestion || "Sin pregunta específica",
+      pregunta_profesional: userQuestion || "Hola, necesito ayuda",
       municipio: formData.municipio_residencia || "N/A",
       ccaa: formData.ccaa || "N/A",
       conocer_felgtbi: formData.como_conocio_felgtbi || "N/A",
@@ -252,7 +252,7 @@ function ChatbotSanitario() {
 
     setChatHistory((prevHistory) => [
       ...prevHistory,
-      { type: "user", message: userQuestion || "Sin pregunta específica" },
+      { type: "user", message: userQuestion || "Hola, necesito ayuda" },
     ]);
 
     setIsLLMLoading(true);
